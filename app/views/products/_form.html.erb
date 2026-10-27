@@ -1,0 +1,62 @@
+
+<%= form_with(model: product) do |form| %>
+
+  <div style="width:100%; max-width:500px; margin:24px auto; padding:28px; box-sizing:border-box; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 4px 14px rgba(15,23,42,0.06); color:#334155;">
+
+    <h2 style="margin:0 0 6px; font-size:22px; font-weight:700; color:#0f172a;">
+      <%= product.new_record? ? "Add Product" : "Edit Product" %>
+    </h2>
+
+    <p style="margin:0 0 24px; font-size:13px; color:#64748b;">
+      Enter the product details below.
+    </p>
+
+    <% if product.errors.any? %>
+      <div id="error_explanation"
+           style="margin-bottom:20px; padding:12px 14px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; color:#b91c1c; font-size:13px;">
+
+        <strong style="display:block; margin-bottom:6px;">
+          <%= pluralize(product.errors.count, "error") %> prevented this product from being saved:
+        </strong>
+
+        <ul style="margin:0; padding-left:20px;">
+          <% product.errors.each do |error| %>
+            <li style="margin-top:4px;"><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div style="margin-bottom:18px;">
+      <%= form.label :title, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.text_field :title,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:title].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <%= form.label :description, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.textarea :description, rows: 4,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:description].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; line-height:1.5; resize:vertical; outline-color:#2563eb;" %>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <%= form.label :image_url, "Image URL", style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.url_field :image_url,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:image_url].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <%= form.label :price, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.number_field :price, step: "0.01", min: 0,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+    </div>
+
+    <%= form.submit(product.new_record? ? "Create Product" : "Update Product",
+        style: "display:block; width:100%; padding:11px 16px; border:none; border-radius:8px; background:#2563eb; color:#ffffff; font-size:14px; font-weight:600; cursor:pointer;") %>
+
+  </div>
+<% end %>

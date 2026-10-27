@@ -1,0 +1,38 @@
+
+<% content_for :title, "Editing product" %>
+
+<div style="width:100%; max-width:600px; margin:0 auto; padding:24px 16px; box-sizing:border-box; color:#334155;">
+
+  <div style="margin-bottom:24px;">
+    <p style="margin:0 0 6px; font-size:12px; font-weight:600; color:#2563eb; text-transform:uppercase; letter-spacing:0.08em;">
+      Product Management
+    </p>
+
+    <h1 style="margin:0; font-size:30px; font-weight:750; color:#0f172a;">
+      Editing product
+    </h1>
+
+    <p style="margin:8px 0 0; font-size:14px; line-height:1.5; color:#64748b;">
+      Update the details for <strong style="color:#334155;"><%= @product.title %></strong>.
+    </p>
+  </div>
+
+  <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 4px 14px rgba(15,23,42,0.06); overflow:hidden;">
+
+    <div style="padding:24px;">
+      <%= render "form", product: @product %>
+    </div>
+
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;">
+
+    <%= link_to "View product", @product,
+        style: "flex:1; min-width:130px; padding:11px 15px; box-sizing:border-box; text-align:center; background:#eff6ff; color:#1d4ed8; text-decoration:none; border:1px solid #bfdbfe; border-radius:8px; font-size:14px; font-weight:600;" %>
+
+    <%= link_to "← Back to products", products_path,
+        style: "flex:1; min-width:130px; padding:11px 15px; box-sizing:border-box; text-align:center; background:#f1f5f9; color:#334155; text-decoration:none; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-weight:600;" %>
+
+  </div>
+
+</div>
