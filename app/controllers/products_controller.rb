@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
+        puts @product.errors.full_messages
         format.html { render :new, status: :unprocessable_content }
         format.json { render json: @product.errors, status: :unprocessable_content }
       end
@@ -40,6 +41,8 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @product }
+        @product.broadcast_replace_later_to 'products',
+        partial: 'store/product'
       else
         format.html { render :edit, status: :unprocessable_content }
         format.json { render json: @product.errors, status: :unprocessable_content }
