@@ -19,10 +19,11 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("LineItem.count") do
       post line_items_url, params: { product_id: products(:ruby).id }
     end
+
     follow_redirect!
-    
-    assert_select 'h2', 'Your Pragmatic Cart'
-    assert_select 'li', 'Programming Ruby 1.9'
+
+    assert_select "h2", "Your Cart"
+    assert_select "td", "Programming Ruby 1.9"
   end
 
   test "should show line_item" do
@@ -36,25 +37,31 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update line_item" do
-    patch line_item_url(@line_item), params: { line_item: { cart_id: @line_item.cart_id, product_id: @line_item.product_id } }
+    patch line_item_url(@line_item), params: { line_item: { product_id: @line_item.product_id } }
     assert_redirected_to line_item_url(@line_item)
   end
 
   test "should destroy line_item" do
+    post line_items_url, params: { product_id: products(:ruby).id }
+
+    @cart = Cart.find(session[:cart_id])
+    @line_item = @cart.line_items.find_by!(product: products(:ruby))
+
     assert_difference("LineItem.count", -1) do
       delete line_item_url(@line_item)
     end
 
-    assert_redirected_to line_items_url
+    assert_redirected_to store_index_url
   end
 
   test "should create line_item via turbo-stream" do
-    assert_difference('LineItem.count') do
-      post line_items_url, params: { product_id: products(:ruby).id },
-      as: :turbo_stream
+    assert_difference("LineItem.count") do
+      post line_items_url,
+        params: { product_id: products(:ruby).id },
+        as: :turbo_stream
     end
-    assert_response :success
-    assert_match /<tr class="line-item-highlight">/, @response.body
-  end
 
+    assert_response :success
+    assert_match(/<tr id="line_item_\d+"\s+class="line-item-highlight">/, @response.body)
+  end
 end

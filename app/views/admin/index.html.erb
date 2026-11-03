@@ -1,0 +1,43 @@
+
+<div style="width:100%; max-width:1000px; margin:30px auto; padding:0 12px; box-sizing:border-box;">
+
+  <!-- Welcome Section -->
+  <div style="padding:32px; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+
+    <h1 style="margin:0 0 10px; color:#14532d; font-size:32px; font-weight:800;">
+      Welcome!
+    </h1>
+
+    <p style="margin:0; color:#64748b; font-size:15px;">
+      Welcome to your online bookstore dashboard.
+    </p>
+
+    <!-- Date and Time -->
+    <div style="margin-top:26px; padding:16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px;">
+      <p style="margin:0 0 5px; color:#64748b; font-size:12px; font-weight:600;">
+        CURRENT DATE AND TIME
+      </p>
+
+      <p style="margin:0; color:#334155; font-size:16px; font-weight:600;">
+        <%= Time.current.strftime("%d %B %Y, %I:%M:%S %p") %>
+      </p>
+    </div>
+
+    <!-- Order Count -->
+    <div style="margin-top:16px; padding:20px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px;">
+      <p style="margin:0 0 6px; color:#166534; font-size:13px; font-weight:600;">
+        TOTAL ORDERS
+      </p>
+
+      <p style="margin:0; color:#15803d; font-size:32px; font-weight:800;">
+        <%= @total_orders %>
+      </p>
+
+      <p style="margin:4px 0 0; color:#166534; font-size:13px;">
+        <%= pluralize(@total_orders, "order") %> received so far.
+      </p>
+    </div>
+
+  </div>
+
+</div>

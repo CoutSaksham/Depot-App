@@ -3,7 +3,8 @@ class OrdersController < ApplicationController
   before_action :set_cart, only: %i[ new create ]
   before_action :ensure_cart_isnt_empty, only: %i[ new ]
   before_action :set_order, only: %i[ show edit update destroy ]
-
+  skip_before_action :authorize, only: %i[ new create ]
+  
   # GET /orders or /orders.json
   def index
     @orders = Order.all
@@ -31,8 +32,9 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        format.html { redirect_to store_index_url, notice:
-          'Thank you for your order.' }
+        ChargeOrderJob.perform_later(@order,pay_type_params.to_h)
+        format.html { redirect_to store_index_url(locale: I18n.locale),
+                      notice: I18n.t('.thanks') }
           format.json { render :show, status: :created,
           location: @order }
       else
@@ -80,5 +82,9 @@ class OrdersController < ApplicationController
       if @cart.line_items.empty?
         redirect_to store_index_url, notice: 'Your cart is empty'
       end
+    end
+
+    def pay_type_params
+      params.require(:order).permit(:pay_type)
     end
 end

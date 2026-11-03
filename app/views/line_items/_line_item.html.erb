@@ -27,7 +27,7 @@
 
     <div style="display:flex; align-items:center; gap:7px;">
 
-      <%= button_to "−", update_quantity_line_item_path(line_item.id, num: -1),
+      <%= button_to "−", update_quantity_line_item_path(id: line_item.id, num: -1),
           method: :patch,
           form: { style: "display:inline-block; margin:0;" },
           style: "width:27px; height:27px; display:flex; align-items:center; justify-content:center; background:#fee2e2; color:#dc2626; border:1px solid #fecaca; border-radius:6px; font-size:17px; font-weight:600; cursor:pointer; padding:0;" %>
@@ -36,7 +36,7 @@
         <%= line_item.quantity %>
       </span>
 
-      <%= button_to "+", update_quantity_line_item_path(line_item.id, num: 1),
+      <%= button_to "+", update_quantity_line_item_path(id: line_item.id, num: 1),
           method: :patch,
           form: { style: "display:inline-block; margin:0;" },
           style: "width:27px; height:27px; display:flex; align-items:center; justify-content:center; background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; border-radius:6px; font-size:17px; font-weight:600; cursor:pointer; padding:0;" %>

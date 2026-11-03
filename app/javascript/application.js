@@ -15,3 +15,6 @@ document.addEventListener("turbo:load", () => {
     }, 3000);
   });
 });import "channels"
+
+import "trix"
+import "@rails/actiontext"

@@ -1,0 +1,105 @@
+
+<div style="max-width:1000px; margin:0 auto; padding:20px;">
+
+  <h2 style="margin:0 0 20px; padding:12px 16px; background:#dcfce7; color:#14532d; font-size:21px; font-weight:700; border-radius:8px;">
+    Support Requests
+  </h2>
+
+  <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:20px;">
+
+    <% @support_requests.each do |support_request| %>
+      <li style="background:#ffffff; border:1px solid #e5e7eb; border-radius:12px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+
+        <h1 style="margin:0 0 14px; font-size:15px; font-weight:500; color:#475569; line-height:1.7;">
+          On <span style="color:#14532d; font-weight:600;"><%= support_request.created_at.to_formatted_s(:long) %></span>
+          <br>
+          <code style="padding:3px 7px; background:#f1f5f9; color:#2563eb; border-radius:5px; font-size:13px;">
+            <%= support_request.email %>
+          </code>
+          writes:
+        </h1>
+
+        <blockquote style="margin:0 0 20px; padding:16px 18px; background:#f8fafc; border-left:4px solid #15803d; border-radius:6px; color:#334155;">
+
+          <h2 style="margin:0 0 10px; color:#14532d; font-size:18px; font-weight:700;">
+            <%= support_request.subject %>
+          </h2>
+
+          <div style="font-size:14px; line-height:1.7; color:#475569; white-space:pre-wrap;">
+            <%= support_request.body %>
+          </div>
+
+        </blockquote>
+
+        <% if support_request.order %>
+
+          <h3 style="margin:0 0 14px; padding-bottom:8px; border-bottom:1px solid #e5e7eb; color:#14532d; font-size:16px; font-weight:700;">
+            Recent Order
+          </h3>
+
+          <dl style="display:grid; grid-template-columns:120px 1fr; gap:10px 14px; margin:0; font-size:14px;">
+
+            <dt style="font-weight:600; color:#64748b;">Name</dt>
+            <dd style="margin:0; color:#1e293b;"><%= support_request.order.name %></dd>
+
+            <dt style="font-weight:600; color:#64748b;">Email</dt>
+            <dd style="margin:0; color:#1e293b;"><%= support_request.order.email %></dd>
+
+            <dt style="font-weight:600; color:#64748b;">Address</dt>
+            <dd style="margin:0; color:#1e293b;"><%= support_request.order.address %></dd>
+
+            <dt style="font-weight:600; color:#64748b;">Pay Type</dt>
+            <dd style="margin:0; color:#1e293b;"><%= support_request.order.pay_type %></dd>
+
+            <dt style="font-weight:600; color:#64748b;">Line Items</dt>
+            <dd style="margin:0; color:#1e293b;">
+              <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:7px;">
+                <% support_request.order.line_items.each do |line_item| %>
+                  <li style="padding:9px 12px; background:#f0fdf4; border:1px solid #dcfce7; border-radius:6px;">
+                    <span style="font-weight:600; color:#14532d;"><%= line_item.product.title %></span>
+                    <span style="margin-left:8px; color:#475569;">
+                      (<%= line_item.product.price %>)
+                    </span>
+                  </li>
+                <% end %>
+              </ul>
+            </dd>
+
+          </dl>
+
+        <% else %>
+
+          <h3 style="margin:0; padding:10px 14px; background:#fef2f2; color:#b91c1c; border-radius:7px; font-size:14px; font-weight:600;">
+            No associated order
+          </h3>
+
+        <% end %>
+
+        <% if support_request.response.blank? %>
+          <%= form_with(model: support_request,
+            local: true,
+            class: "depot_form") do |form| %>
+            <div class="field">
+              <%= form.label :response, "Write Response" %>
+              <%= form.rich_text_area :response, id: :support_request_response %>
+            </div>
+            <div class="actions">
+              <%= form.submit "Send Response",
+                style: "padding:10px 22px; background:#15803d; color:#ffffff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.12);" %>
+            </div>
+          <% end %>
+        <% else %>
+          <h4 style="margin:18px 0 10px; color:#14532d; font-size:15px; font-weight:700;">
+            Our Response
+          </h4>
+
+          <blockquote style="display:block; width:100%; box-sizing:border-box; margin:0 0 16px; padding:12px 16px; background:#f0fdf4; border-left:4px solid #15803d; border-radius:7px; color:#334155; font-size:14px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere;">
+            <%= support_request.response %>
+          </blockquote>
+        <% end %>
+
+      </li>
+    <% end %>
+
+  </ul>
+</div>
