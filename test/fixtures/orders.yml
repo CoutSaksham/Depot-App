@@ -3,9 +3,22 @@ one:
   address: MyText
   email: dave@example.org
   pay_type: Check
-  
+
+another_one:
+  name: Dave Thomas
+  address: 123 Any St
+  email: dave@example.org
+  pay_type: Check
+  created_at: <%= 2.days.ago %>
+
+other_customer:
+  name: Chris Jones
+  address: 456 Somewhere Ln
+  email: chris@nowhere.net
+  pay_type: Check
+
 two:
   name: MyString
   address: MyText
-  email: MyString
-  pay_type: 1
+  email: mystring@example.org
+  pay_type: "Credit card"

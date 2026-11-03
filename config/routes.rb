@@ -1,19 +1,34 @@
 Rails.application.routes.draw do
-  resources :orders
-  resources :line_items do
-    member do
-      patch :update_quantity
-    end
+  get 'admin' => 'admin#index'
+  controller :sessions do
+    get 'login' => :new
+    post 'login' => :create
+    delete 'logout' => :destroy
   end
+  get "sessions/new"
+  get "sessions/create"
+  get "sessions/destroy"
+  resources :users
 
-  resources :carts do
-    member do
-      patch :empty
+  resources :support_requests, only: %i[ index update ]
+
+  scope '(:locale)' do
+    resources :orders
+    resources :line_items do
+      member do
+        patch :update_quantity
+      end
     end
-  end
 
-  root 'store#index', as: 'store_index'
-  resources :products
+    resources :carts do
+      member do
+        patch :empty
+      end
+    end
+
+    root 'store#index', as: 'store_index'
+    resources :products
+  end 
 
   resources :products
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

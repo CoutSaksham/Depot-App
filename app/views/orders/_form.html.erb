@@ -3,13 +3,12 @@
 
   <% if order.errors.any? %>
     <div id="error_explanation" style="background:#fef2f2; color:#b91c1c; padding:14px 16px; border:1px solid #fecaca; border-radius:8px; margin:16px 0;">
-      <h2 style="margin:0 0 8px; font-size:14px; font-weight:700;">
-        <%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:
-      </h2>
+      <h2><%=raw t('errors.template.header', count: @order.errors.count, model: t('activerecord.models.order')) %>.</h2>
+      <p><%= t('errors.template.body') %></p>
 
       <ul style="margin:0; padding-left:20px; font-size:13px;">
         <% order.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li><%=raw error.full_message %></li>
         <% end %>
       </ul>
     </div>
@@ -17,7 +16,7 @@
 
   <!-- Name -->
   <div style="margin:20px 0;">
-    <%= form.label :name, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+    <%= form.label :name, t('.name'), style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
 
     <%= form.text_field :name,
         style: "width:100%; padding:11px 13px; border:1px solid #{order.errors[:name].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; font-size:14px; color:#1e293b; box-sizing:border-box; outline:none;",
@@ -26,7 +25,7 @@
 
   <!-- Address -->
   <div style="margin:20px 0;">
-    <%= form.label :address, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+    <%=  form.label :address, t('.address_html'), style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
 
     <%= form.text_area :address, rows: 4,
         style: "width:100%; padding:11px 13px; border:1px solid #{order.errors[:address].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; font-size:14px; color:#1e293b; box-sizing:border-box; resize:vertical;",
@@ -35,7 +34,7 @@
 
   <!-- Email -->
   <div style="margin:20px 0;">
-    <%= form.label :email, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+    <%=  form.label :email, t('.email'), style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
 
     <%= form.email_field :email,
         style: "width:100%; padding:11px 13px; border:1px solid #{order.errors[:email].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; font-size:14px; color:#1e293b; box-sizing:border-box;",
@@ -45,8 +44,9 @@
   <div data-controller="payment">
     <div class="my-5">
       <%= form.label :pay_type %>
-      <%= form.select :pay_type, Order.pay_types.keys,
-      { prompt: 'Select a payment method' },
+      <%= form.select :pay_type,
+      Order.pay_types.keys.map {|key| [t(".pay_types.#{key}"), key] },
+      { prompt:  t('.pay_prompt_html') },
       'data-payment-target' => 'selection',
       'data-action' => 'payment#showAdditionalFields',
       class: "input-field" %>
@@ -68,7 +68,7 @@
 
   <!-- Submit Button -->
   <div style="margin-top:26px;">
-    <%= form.submit "Place Order",
+    <%= form.submit t('.submit'),
         style: "width:100%; padding:13px 20px; background:#15803d; color:#ffffff; border:0; border-radius:8px; font-size:15px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.12);" %>
   </div>
 

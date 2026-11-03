@@ -1,0 +1,31 @@
+
+<% content_for :title, "New user" %>
+
+<div style="width:100%; max-width:600px; margin:30px auto; padding:0 12px; box-sizing:border-box;">
+
+  <!-- Main Card -->
+  <div style="background:#ffffff; padding:28px; border:1px solid #e2e8f0; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+
+    <!-- Heading -->
+    <div style="margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid #e2e8f0;">
+      <h1 style="margin:0; color:#14532d; font-size:28px; font-weight:800;">
+        New User
+      </h1>
+
+      <p style="margin:6px 0 0; color:#64748b; font-size:14px;">
+        Create a new user account by entering the details below.
+      </p>
+    </div>
+
+    <!-- User Form -->
+    <%= render "form", user: @user %>
+
+    <!-- Back Button -->
+    <div style="margin-top:20px; padding-top:16px; border-top:1px solid #e2e8f0;">
+      <%= link_to "← Back to Users", users_path,
+          style: "display:inline-block; padding:10px 17px; background:#f1f5f9; color:#334155; text-decoration:none; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-weight:600;" %>
+    </div>
+
+  </div>
+
+</div>

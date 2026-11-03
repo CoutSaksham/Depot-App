@@ -28,16 +28,29 @@
 
       <%= image_tag "logo.svg",
           alt: "The Pragmatic Bookshelf",
-          style: "width:65px; height:65px; object-fit:contain;" %>
+          style: "width:65px; height:65px; object-fit:contain; flex-shrink:0;" %>
 
-      <div>
-        <h1 style="margin:0; font-size:22px; font-weight:750; letter-spacing:-0.4px;">
+      <div style="display:flex; flex-direction:column; justify-content:center;">
+        <h1 style="margin:0; font-size:22px; font-weight:750; letter-spacing:-0.4px; color:#ffffff;">
           <%= @page_title %>
         </h1>
         <p style="margin:3px 0 0; font-size:12px; color:#dcfce7;">
           The Pragmatic Bookshelf
         </p>
       </div>
+
+      <aside data-controller="locale" style="margin-left:auto;">
+        <%= form_tag request.path, method: :get, class: 'locale',
+            style: "display:flex; align-items:center; gap:6px; margin:0;" do %>
+
+          <%= select_tag 'set_locale',
+            options_for_select(LANGUAGES, I18n.locale.to_s),
+            onchange: 'this.form.submit()',
+            style: "padding:7px 10px; background:#ffffff; color:#14532d; border:1px solid #bbf7d0; border-radius:7px; font-size:13px; font-weight:500; cursor:pointer;" %>
+
+        <% end %>
+      </aside>
+
     </header>
 
     <section style="display:flex; min-height:calc(100vh - 91px); background:#f8fafc;">
@@ -50,37 +63,89 @@
 
         <%= render partial: 'layouts/cart', locals: {cart: @cart } %>
 
-        <ul style="margin:0; padding:0; list-style:none;">
+        
 
-          <li style="margin-bottom:6px;">
-            <a href="/"
-              style="display:block; padding:11px 13px; color:#ffffff; text-decoration:none; font-size:14px; font-weight:600; border-radius:8px; background:#166534;">
-              Home
-            </a>
-          </li>
+    <ul style="list-style:none; padding:0; margin:0; color:#d1d5db; line-height:2.2;">
+      <li>
+        <a href="/" style="display:block; padding:5px 12px; color:#f0fdf4; text-decoration:none; font-size:14px; border-radius:6px;"
+          onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+          onmouseout="this.style.background='transparent'">
+          <%= t('.home') %>
+        </a>
+      </li>
+      <li>
+        <a href="/questions" style="display:block; padding:5px 12px; color:#f0fdf4; text-decoration:none; font-size:14px; border-radius:6px;"
+          onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+          onmouseout="this.style.background='transparent'">
+          <%= t('.questions') %>
+        </a>
+      </li>
+      <li>
+        <a href="/news" style="display:block; padding:5px 12px; color:#f0fdf4; text-decoration:none; font-size:14px; border-radius:6px;"
+          onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+          onmouseout="this.style.background='transparent'">
+          <%= t('.news') %>
+        </a>
+      </li>
+      <li>
+        <a href="/rails/conductor/action_mailbox/inbound_emails/new" style="display:block; padding:5px 12px; color:#f0fdf4; text-decoration:none; font-size:14px; border-radius:6px;"
+          onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+          onmouseout="this.style.background='transparent'">
+          <%= t('.contact') %>
+        </a>
+      </li>
+    </ul>
 
-          <li style="margin-bottom:6px;">
-            <a href="/questions"
-              style="display:block; padding:11px 13px; color:#d1fae5; text-decoration:none; font-size:14px; border-radius:8px;">
-              Questions
-            </a>
-          </li>
 
-          <li style="margin-bottom:6px;">
-            <a href="/news"
-              style="display:block; padding:11px 13px; color:#d1fae5; text-decoration:none; font-size:14px; border-radius:8px;">
-              News
-            </a>
-          </li>
 
-          <li style="margin-bottom:6px;">
-            <a href="/contact"
-              style="display:block; padding:11px 13px; color:#d1fae5; text-decoration:none; font-size:14px; border-radius:8px;">
-              Contact
-            </a>
-          </li>
+        <% if session[:user_id] %>
 
-        </ul>
+          <div style="margin:14px 0; border-top:1px solid rgba(255,255,255,0.2);"></div>
+
+          <p style="margin:0 0 10px; color:#bbf7d0; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;">
+            Admin Menu
+          </p>
+
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px;">
+
+            <li>
+              <%= link_to "Orders", orders_path,
+                  style: "display:block; padding:10px 13px; color:#f0fdf4; text-decoration:none; font-size:14px; font-weight:500; border-radius:7px; background:rgba(255,255,255,0.06);",
+                  onmouseover: "this.style.background='rgba(255,255,255,0.15)'",
+                  onmouseout: "this.style.background='rgba(255,255,255,0.06)'" %>
+            </li>
+
+            <li>
+              <%= link_to "Products", products_path,
+                  style: "display:block; padding:10px 13px; color:#f0fdf4; text-decoration:none; font-size:14px; font-weight:500; border-radius:7px; background:rgba(255,255,255,0.06);",
+                  onmouseover: "this.style.background='rgba(255,255,255,0.15)'",
+                  onmouseout: "this.style.background='rgba(255,255,255,0.06)'" %>
+            </li>
+
+            <li>
+              <%= link_to "Users", users_path,
+                  style: "display:block; padding:10px 13px; color:#f0fdf4; text-decoration:none; font-size:14px; font-weight:500; border-radius:7px; background:rgba(255,255,255,0.06);",
+                  onmouseover: "this.style.background='rgba(255,255,255,0.15)'",
+                  onmouseout: "this.style.background='rgba(255,255,255,0.06)'" %>
+            </li>
+
+            <li>
+              <%= link_to "Support Requests", support_requests_path,
+                  style: "display:block; padding:10px 13px; color:#f0fdf4; text-decoration:none; font-size:14px; font-weight:500; border-radius:7px; background:rgba(255,255,255,0.06);",
+                  onmouseover: "this.style.background='rgba(255,255,255,0.15)'",
+                  onmouseout: "this.style.background='rgba(255,255,255,0.06)'" %>
+            </li>
+
+            <li style="margin-top:10px;">
+              <%= button_to "Logout", logout_path,
+                  method: :delete,
+                  form: { style: "margin:0;" },
+                  style: "width:100%; padding:10px 13px; background:#dc2626; color:#ffffff; border:0; border-radius:7px; font-size:14px; font-weight:600; text-align:left; cursor:pointer;" %>
+            </li>
+
+          </ul>
+
+        <% end %>
 
       </nav>
 
