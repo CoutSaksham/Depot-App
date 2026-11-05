@@ -1,6 +1,6 @@
 class StoreController < ApplicationController
   skip_before_action :authorize
-  # include StoreIndexVisitCount
+  include StoreIndexVisitCount
   include CurrentCart
   before_action :set_cart
   def index
@@ -10,7 +10,7 @@ class StoreController < ApplicationController
     else
       @products = Product.order(:title)
       @cart_id = set_cart
-      # update_counter
+      update_counter
     end
   end
 end
