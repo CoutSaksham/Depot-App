@@ -12,6 +12,10 @@ class User < ApplicationRecord
       message: "must be a valid email address"
     }
 
+  validates :name, presence: true
+  validates :email, uniqueness: true,
+                    format: { with: /@[a-z]+\.[a-z]+\z/, message: 'Email should end in @xyz.abc' }
+
   class Error < StandardError
   end
 

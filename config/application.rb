@@ -24,6 +24,10 @@ module Depot
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+<<<<<<< HEAD
     config.autoload_paths << Rails.root.join("app/validators")
+=======
+    config.autoload_paths << Rails.root.join('app/validators')
+>>>>>>> 84be896 (Added validations in products, line_items and users models)
   end
 end
