@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_03_073313) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_04_105108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_073313) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "line_items_count", default: 0, null: false
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -94,6 +95,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_073313) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "enabled", default: false
+    t.decimal "discount_price", precision: 5, scale: 2
+    t.string "permalink"
   end
 
   create_table "support_requests", force: :cascade do |t|
@@ -111,6 +115,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_073313) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
