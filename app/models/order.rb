@@ -1,4 +1,4 @@
-require_relative '../../lib/tasks/pago'
+require_relative "../../lib/tasks/pago"
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
