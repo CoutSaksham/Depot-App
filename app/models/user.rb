@@ -11,5 +11,4 @@ class User < ApplicationRecord
       raise Error.new "Can't delete last user"
     end
   end
-
 end

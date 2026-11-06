@@ -65,7 +65,7 @@ class CartsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           :cart,
-          partial: 'layouts/cart',
+          partial: "layouts/cart",
           locals: { cart: @cart }
         )
       end

@@ -30,7 +30,7 @@
   <div style="padding-top:16px; border-top:1px solid #e2e8f0;">
     <strong style="display:block; font-size:12px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Price</strong>
     <div style="font-size:24px; font-weight:700; color:#2563eb;">
-      <%= number_to_currency(product.price) %>
+      <%= product.enabled ? number_to_currency(product.discount_price) : number_to_currency(product.price) %>
     </div>
   </div>
 

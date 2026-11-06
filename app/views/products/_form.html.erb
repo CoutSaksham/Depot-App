@@ -55,6 +55,27 @@
           style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
     </div>
 
+    <div style="margin-bottom:24px;">
+      <%= form.label :enabled, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.check_box :enabled,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <%= form.label :discount_price, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.number_field :discount_price, step: "0.01", min: 0,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <%= form.label :permalink, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+
+      <%= form.text_field :permalink,
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:title].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+    </div>
+
     <%= form.submit(product.new_record? ? "Create Product" : "Update Product",
         style: "display:block; width:100%; padding:11px 16px; border:none; border-radius:8px; background:#2563eb; color:#ffffff; font-size:14px; font-weight:600; cursor:pointer;") %>
 

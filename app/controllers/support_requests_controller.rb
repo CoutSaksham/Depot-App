@@ -9,5 +9,4 @@ class SupportRequestsController < ApplicationController
     SupportRequestMailer.respond(support_request).deliver_now
     redirect_to support_requests_path
   end
-
 end

@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     end
   end
 
-  rescue_from 'User::Error' do |exception|
+  rescue_from "User::Error" do |exception|
     redirect_to users_url, notice: exception.message
   end
 
@@ -70,6 +70,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email, :password, :password_confirmation ])
     end
 end

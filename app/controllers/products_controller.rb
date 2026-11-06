@@ -41,8 +41,8 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @product }
-        @product.broadcast_replace_later_to 'products',
-        partial: 'store/product'
+        @product.broadcast_replace_later_to "products",
+        partial: "store/product"
       else
         format.html { render :edit, status: :unprocessable_content }
         format.json { render json: @product.errors, status: :unprocessable_content }
@@ -68,6 +68,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :title, :description, :image_url, :price ])
+      params.expect(product: [ :title, :description, :image_url, :price, :enabled, :discount_price, :permalink ])
     end
 end

@@ -1,7 +1,8 @@
-require 'tasks\pago'
+require_relative "../../lib/tasks/pago"
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
+  has_many :support_requests, dependent: :destroy
 
   enum :pay_type, {
     "Check" => 0,
@@ -29,7 +30,7 @@ class Order < ApplicationRecord
       payment_details[:account] = pay_type_params[:account_number]
     when "Credit card"
       payment_method = :credit_card
-      month,year = pay_type_params[:expiration_date].split(//)
+      month, year = pay_type_params[:expiration_date].split(//)
       payment_details[:cc_num] = pay_type_params[:credit_card_number]
       payment_details[:expiration_month] = month
       payment_details[:expiration_year] = year
@@ -48,5 +49,4 @@ class Order < ApplicationRecord
     raise payment_result.error
     end
   end
-
 end
