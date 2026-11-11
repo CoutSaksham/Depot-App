@@ -1,13 +1,9 @@
+<div id="<%= dom_id line_item %>"
+     class="<%= 'line-item-highlight' if line_item == @current_item %>"
+     style="width:100%; padding:12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px; box-sizing:border-box;">
 
-<div id="<%= dom_id line_item %>" style="width:100%; padding:12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px; box-sizing:border-box;">
-  <% if line_item == @current_item %>
-    <tr class="line-item-highlight">
-  <% else %>
-    <tr>
-  <% end %>
   <!-- Product title -->
   <div style="display:flex; align-items:flex-start; gap:9px; margin-bottom:10px;">
-
     <span style="display:flex; align-items:center; justify-content:center; width:29px; height:29px; flex-shrink:0; background:#dcfce7; color:#166534; border-radius:7px; font-size:15px;">
       &#128218;
     </span>
@@ -15,18 +11,15 @@
     <span style="flex:1; min-width:0; color:#334155; font-size:13px; font-weight:600; line-height:1.5; overflow-wrap:anywhere;">
       <%= line_item.product.title %>
     </span>
-
   </div>
 
   <!-- Price and quantity -->
   <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-
     <span style="color:#15803d; font-size:14px; font-weight:700;">
       <%= number_to_currency(line_item.product.price) %>
     </span>
 
     <div style="display:flex; align-items:center; gap:7px;">
-
       <%= button_to "−", update_quantity_line_item_path(id: line_item.id, num: -1),
           method: :patch,
           form: { style: "display:inline-block; margin:0;" },
@@ -40,8 +33,6 @@
           method: :patch,
           form: { style: "display:inline-block; margin:0;" },
           style: "width:27px; height:27px; display:flex; align-items:center; justify-content:center; background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; border-radius:6px; font-size:17px; font-weight:600; cursor:pointer; padding:0;" %>
-
     </div>
   </div>
-
 </div>

@@ -1,9 +1,9 @@
 one:
   product: two
   cart: one
-  price: 49.99
+  quantity: 1
 
 two:
   product: ruby
   order: one
-  price: 49.99
+  quantity: 1

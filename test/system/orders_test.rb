@@ -47,7 +47,7 @@ class OrdersTest < ApplicationSystemTestCase
 
     fill_in "Nombre", with: "Dave Thomas"
     fill_in "Dirección", with: "123 Main Street"
-    fill_in "E-mail", with: "dave@example.com"
+    fill_in "Correo electrónico", with: "dave@example.com"
 
     select "Cheque", from: "Forma de pago"
     fill_in "order_routing_number", with: "123456"

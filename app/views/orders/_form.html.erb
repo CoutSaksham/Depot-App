@@ -56,16 +56,6 @@
     <%= render partial: 'po', locals: {form: form} %>
   </div>
 
-
-  <!-- Payment Method -->
-  <div style="margin:20px 0;">
-    <%= form.label :pay_type, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
-
-    <%= form.select :pay_type, Order.pay_types.keys,
-        { prompt: "Select a payment method" },
-        style: "width:100%; padding:11px 13px; border:1px solid #{order.errors[:pay_type].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; font-size:14px; color:#1e293b; box-sizing:border-box;" %>
-  </div>
-
   <!-- Submit Button -->
   <div style="margin-top:26px;">
     <%= form.submit t('.submit'),
