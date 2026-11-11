@@ -56,9 +56,25 @@ class OrdersTest < ApplicationSystemTestCase
     click_button "Realizar Pedido"
     assert_text "Gracias por su pedido"
 
+    click_button "Realizar Pedido"
+    assert_text "Gracias por su pedido"
+
+    adapter = ActiveJob::Base.queue_adapter
+    jobs_before = adapter.performed_jobs.size
+
     perform_enqueued_jobs
-    perform_enqueued_jobs
-    assert_performed_jobs 2
+
+    new_jobs = adapter.performed_jobs.drop(jobs_before)
+
+    puts "\n--- JOBS PERFORMED ---"
+    new_jobs.each do |job|
+      puts "JOB CLASS: #{job[:job]}"
+      puts "ARGUMENTS: #{job[:args].inspect}"
+    end
+    puts "TOTAL NEW JOBS: #{new_jobs.size}"
+    puts "----------------------\n"
+
+    assert_equal 2, new_jobs.size
 
     orders = Order.all
     assert_equal 1, orders.size
