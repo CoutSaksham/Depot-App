@@ -4,7 +4,7 @@ class SupportRequestMailer < ApplicationMailer
 
     mail(
       to: @support_request.email,
-      subject: "Response to your support request"
+      subject: "Re: #{@support_request.subject}"
     )
   end
 end

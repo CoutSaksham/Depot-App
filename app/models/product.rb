@@ -13,9 +13,11 @@ class Product < ApplicationRecord
   has_many :line_items
   before_destroy :ensure_not_referenced_by_any_line_item
 
-  private def ensure_not_referenced_by_any_line_item
-    unless line_item.empty?
-      errors.add(:base, "Line Items present")
+  private
+
+  def ensure_not_referenced_by_any_line_item
+    unless line_items.empty?
+      errors.add(:base, "This product cannot be deleted because it has line items.")
       throw :abort
     end
   end

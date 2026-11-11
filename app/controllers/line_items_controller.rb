@@ -96,7 +96,7 @@ class LineItemsController < ApplicationController
       end
 
       format.html do
-        redirect_to request.path,
+        redirect_to store_index_url,
                     notice: "Item removed from cart",
                     status: :see_other
       end

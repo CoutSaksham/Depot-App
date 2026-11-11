@@ -49,9 +49,6 @@
           style: "padding:10px 16px; background:#dc2626; color:#ffffff; border:0; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;",
           data: { turbo_confirm: "Are you sure you want to empty this cart?" } %>
 
-      <p>DEBUG LOCALE: <%= I18n.locale %></p>
-      <p>DEBUG CHECKOUT: <%= t('.checkout') %></p>
-      <p>DEBUG CART ITEMS: <%= cart.line_items.count %></p>
       <%=  button_to t('.checkout'), new_order_path(locale: I18n.locale),
           method: :get,
           form: { style: "display:inline-block; margin:0;" },

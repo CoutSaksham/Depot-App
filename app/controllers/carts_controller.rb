@@ -53,7 +53,7 @@ class CartsController < ApplicationController
     @cart.destroy!
 
     respond_to do |format|
-      format.html { redirect_to carts_path, notice: "Cart was successfully destroyed.", status: :see_other }
+      format.html { redirect_to store_index_url, notice: "Cart was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -78,6 +78,10 @@ class CartsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
       @cart = Cart.find(params.expect(:id))
+
+      unless @cart.id == session[:cart_id]
+        redirect_to store_index_url, notice: "Invalid cart"
+      end
     end
 
     # Only allow a list of trusted parameters through.

@@ -18,6 +18,6 @@ class OrderMailerTest < ActionMailer::TestCase
       <td[^>]*>1<\/td>\s*
       <td>&times;<\/td>\s*
       <td[^>]*>\s*Programming\sRuby\s1.9\s*</td>
-    }x, mail.body.to_s
+    }x, mail.html_part.body.decoded
   end
 end

@@ -4,9 +4,15 @@
 
 <p>Thank you for contacting us.</p>
 
-<p>Our response:</p>
+<p>Your original message:</p>
+<div>
+  <%= @support_request.body %>
+</div>
 
-<p><%= @support_request.response %></p>
+<p>Our response:</p>
+<div>
+  <%= @support_request.response %>
+</div>
 
 <p>Regards,<br>
 Support Team</p>

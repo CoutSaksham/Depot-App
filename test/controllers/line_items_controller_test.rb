@@ -23,7 +23,7 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
     assert_select "h2", "Your Cart"
-    assert_select "td", "Programming Ruby 1.9"
+    assert_select "span", text: "Programming Ruby 1.9"
   end
 
   test "should show line_item" do
@@ -62,6 +62,6 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match(/<tr id="line_item_\d+"\s+class="line-item-highlight">/, @response.body)
+    assert_select "div.line-item-highlight[id^='line_item_']"
   end
 end
