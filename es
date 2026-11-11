@@ -1,0 +1,568 @@
+[1mdiff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml[m
+[1mindex ffb12cc..b38bc73 100644[m
+[1m--- a/.github/workflows/ci.yml[m
+[1m+++ b/.github/workflows/ci.yml[m
+[36m@@ -95,6 +95,9 @@[m [mjobs:[m
+         uses: ruby/setup-ruby@v1[m
+         with:[m
+           bundler-cache: true[m
+[32m+[m[41m            [m
+[32m+[m[32m      - name: Run RuboCop[m
+[32m+[m[32m        run: bin/rubocop -f github[m
+ [m
+       - name: Run tests[m
+         env:[m
+[1mdiff --git a/Gemfile b/Gemfile[m
+[1mindex ef56cb0..e6ba1f1 100644[m
+[1m--- a/Gemfile[m
+[1m+++ b/Gemfile[m
+[36m@@ -42,7 +42,7 @@[m [mgem "thruster", require: false[m
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images][m
+ gem "image_processing", "~> 1.2"[m
+ [m
+[31m-gem 'fiddle'[m
+[32m+[m[32mgem "fiddle"[m
+ [m
+ group :development, :test do[m
+   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem[m
+[36m@@ -56,6 +56,8 @@[m [mgroup :development, :test do[m
+ [m
+   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/][m
+   gem "rubocop-rails-omakase", require: false[m
+[32m+[m
+[32m+[m[32m  gem "rubocop"[m
+ end[m
+ [m
+ group :development do[m
+[1mdiff --git a/Gemfile.lock b/Gemfile.lock[m
+[1mindex 128c2c9..bc7bef7 100644[m
+[1m--- a/Gemfile.lock[m
+[1m+++ b/Gemfile.lock[m
+[36m@@ -384,6 +384,7 @@[m [mDEPENDENCIES[m
+   propshaft[m
+   puma (>= 5.0)[m
+   rails (~> 8.1.4)[m
+[32m+[m[32m  rubocop[m
+   rubocop-rails-omakase[m
+   selenium-webdriver[m
+   solid_cable[m
+[1mdiff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb[m
+[1mindex 4072cc1..5f768a9 100644[m
+[1m--- a/app/controllers/application_controller.rb[m
+[1m+++ b/app/controllers/application_controller.rb[m
+[36m@@ -25,5 +25,4 @@[m [mprotected[m
+       end[m
+     end[m
+   end[m
+[31m-[m
+ end[m
+[1mdiff --git a/app/controllers/carts_controller.rb b/app/controllers/carts_controller.rb[m
+[1mindex 57932cf..663c0bf 100644[m
+[1m--- a/app/controllers/carts_controller.rb[m
+[1m+++ b/app/controllers/carts_controller.rb[m
+[36m@@ -65,7 +65,7 @@[m [mclass CartsController < ApplicationController[m
+       format.turbo_stream do[m
+         render turbo_stream: turbo_stream.replace([m
+           :cart,[m
+[31m-          partial: 'layouts/cart',[m
+[32m+[m[32m          partial: "layouts/cart",[m
+           locals: { cart: @cart }[m
+         )[m
+       end[m
+[1mdiff --git a/app/controllers/concerns/current_cart.rb b/app/controllers/concerns/current_cart.rb[m
+[1mindex 51a03f7..f1efaea 100644[m
+[1m--- a/app/controllers/concerns/current_cart.rb[m
+[1m+++ b/app/controllers/concerns/current_cart.rb[m
+[36m@@ -5,4 +5,4 @@[m [mmodule CurrentCart[m
+     @cart = Cart.create[m
+     session[:cart_id] = @cart.id[m
+   end[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/controllers/concerns/store_index_visit_count.rb b/app/controllers/concerns/store_index_visit_count.rb[m
+[1mindex 4df3e16..de9fcc3 100644[m
+[1m--- a/app/controllers/concerns/store_index_visit_count.rb[m
+[1m+++ b/app/controllers/concerns/store_index_visit_count.rb[m
+[36m@@ -12,4 +12,4 @@[m [mmodule StoreIndexVisitCount[m
+     session[:store_index_visit_counter] = get_counter[m
+     session[:store_index_visit_counter] = -1[m
+   end[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/controllers/line_items_controller.rb b/app/controllers/line_items_controller.rb[m
+[1mindex 751df52..ff962b2 100644[m
+[1m--- a/app/controllers/line_items_controller.rb[m
+[1m+++ b/app/controllers/line_items_controller.rb[m
+[36m@@ -69,7 +69,7 @@[m [mclass LineItemsController < ApplicationController[m
+         format.turbo_stream do[m
+           render turbo_stream: turbo_stream.replace([m
+           :cart,[m
+[31m-          partial: 'layouts/cart',[m
+[32m+[m[32m          partial: "layouts/cart",[m
+           locals: { cart: @cart }[m
+           )[m
+         end[m
+[36m@@ -90,7 +90,7 @@[m [mclass LineItemsController < ApplicationController[m
+       format.turbo_stream do[m
+         render turbo_stream: turbo_stream.replace([m
+           :cart,[m
+[31m-          partial: 'layouts/cart',[m
+[32m+[m[32m          partial: "layouts/cart",[m
+           locals: { cart: @cart }[m
+         )[m
+       end[m
+[1mdiff --git a/app/controllers/orders_controller.rb b/app/controllers/orders_controller.rb[m
+[1mindex f5b38a1..23ab0f7 100644[m
+[1m--- a/app/controllers/orders_controller.rb[m
+[1m+++ b/app/controllers/orders_controller.rb[m
+[36m@@ -4,7 +4,7 @@[m [mclass OrdersController < ApplicationController[m
+   before_action :ensure_cart_isnt_empty, only: %i[ new ][m
+   before_action :set_order, only: %i[ show edit update destroy ][m
+   skip_before_action :authorize, only: %i[ new create ][m
+[31m-  [m
+[32m+[m
+   # GET /orders or /orders.json[m
+   def index[m
+     @orders = Order.all[m
+[36m@@ -32,9 +32,9 @@[m [mclass OrdersController < ApplicationController[m
+       if @order.save[m
+         Cart.destroy(session[:cart_id])[m
+         session[:cart_id] = nil[m
+[31m-        ChargeOrderJob.perform_later(@order,pay_type_params.to_h)[m
+[32m+[m[32m        ChargeOrderJob.perform_later(@order, pay_type_params.to_h)[m
+         format.html { redirect_to store_index_url(locale: I18n.locale),[m
+[31m-                      notice: I18n.t('.thanks') }[m
+[32m+[m[32m                      notice: I18n.t(".thanks") }[m
+           format.json { render :show, status: :created,[m
+           location: @order }[m
+       else[m
+[36m@@ -80,7 +80,7 @@[m [mclass OrdersController < ApplicationController[m
+ [m
+     def ensure_cart_isnt_empty[m
+       if @cart.line_items.empty?[m
+[31m-        redirect_to store_index_url, notice: 'Your cart is empty'[m
+[32m+[m[32m        redirect_to store_index_url, notice: "Your cart is empty"[m
+       end[m
+     end[m
+ [m
+[1mdiff --git a/app/controllers/products_controller.rb b/app/controllers/products_controller.rb[m
+[1mindex bc122f9..8014550 100644[m
+[1m--- a/app/controllers/products_controller.rb[m
+[1m+++ b/app/controllers/products_controller.rb[m
+[36m@@ -41,8 +41,8 @@[m [mclass ProductsController < ApplicationController[m
+       if @product.update(product_params)[m
+         format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }[m
+         format.json { render :show, status: :ok, location: @product }[m
+[31m-        @product.broadcast_replace_later_to 'products',[m
+[31m-        partial: 'store/product'[m
+[32m+[m[32m        @product.broadcast_replace_later_to "products",[m
+[32m+[m[32m        partial: "store/product"[m
+       else[m
+         format.html { render :edit, status: :unprocessable_content }[m
+         format.json { render json: @product.errors, status: :unprocessable_content }[m
+[1mdiff --git a/app/controllers/store_controller.rb b/app/controllers/store_controller.rb[m
+[1mindex ee79f55..79dc473 100644[m
+[1m--- a/app/controllers/store_controller.rb[m
+[1m+++ b/app/controllers/store_controller.rb[m
+[36m@@ -6,7 +6,7 @@[m [mclass StoreController < ApplicationController[m
+   def index[m
+     if params[:set_locale][m
+       redirect_to store_index_path(locale: params[:set_locale])[m
+[31m-      return[m
+[32m+[m[32m      nil[m
+     else[m
+       @products = Product.order(:title)[m
+       @cart_id = set_cart[m
+[1mdiff --git a/app/controllers/support_requests_controller.rb b/app/controllers/support_requests_controller.rb[m
+[1mindex b6077ea..13d5d41 100644[m
+[1m--- a/app/controllers/support_requests_controller.rb[m
+[1m+++ b/app/controllers/support_requests_controller.rb[m
+[36m@@ -9,5 +9,4 @@[m [mclass SupportRequestsController < ApplicationController[m
+     SupportRequestMailer.respond(support_request).deliver_now[m
+     redirect_to support_requests_path[m
+   end[m
+[31m-[m
+ end[m
+[1mdiff --git a/app/controllers/users_controller.rb b/app/controllers/users_controller.rb[m
+[1mindex e4479b1..d738538 100644[m
+[1m--- a/app/controllers/users_controller.rb[m
+[1m+++ b/app/controllers/users_controller.rb[m
+[36m@@ -57,7 +57,7 @@[m [mclass UsersController < ApplicationController[m
+     end[m
+   end[m
+ [m
+[31m-  rescue_from 'User::Error' do |exception|[m
+[32m+[m[32m  rescue_from "User::Error" do |exception|[m
+     redirect_to users_url, notice: exception.message[m
+   end[m
+ [m
+[1mdiff --git a/app/jobs/charge_order_job.rb b/app/jobs/charge_order_job.rb[m
+[1mindex 1efd3f5..e682ab5 100644[m
+[1m--- a/app/jobs/charge_order_job.rb[m
+[1m+++ b/app/jobs/charge_order_job.rb[m
+[36m@@ -1,7 +1,7 @@[m
+ class ChargeOrderJob < ApplicationJob[m
+   queue_as :default[m
+ [m
+[31m-  def perform(order,pay_type_params)[m
+[32m+[m[32m  def perform(order, pay_type_params)[m
+     order.charge!(pay_type_params)[m
+   end[m
+ end[m
+[1mdiff --git a/app/mailboxes/support_mailbox.rb b/app/mailboxes/support_mailbox.rb[m
+[1mindex 1845b2b..2075ac6 100644[m
+[1m--- a/app/mailboxes/support_mailbox.rb[m
+[1m+++ b/app/mailboxes/support_mailbox.rb[m
+[36m@@ -1,7 +1,7 @@[m
+ class SupportMailbox < ApplicationMailbox[m
+   def process[m
+     recent_order = Order.where(email: mail.from_address.to_s).[m
+[31m-                                order('created_at desc').[m
+[32m+[m[32m                                order("created_at desc").[m
+                                 first[m
+     SupportRequest.create!([m
+       email: mail.from_address.to_s,[m
+[36m@@ -9,6 +9,5 @@[m [mclass SupportMailbox < ApplicationMailbox[m
+       body: mail.body.to_s,[m
+       order: recent_order[m
+     )[m
+[31m-[m
+   end[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/mailers/application_mailer.rb b/app/mailers/application_mailer.rb[m
+[1mindex 941a806..087cf89 100644[m
+[1m--- a/app/mailers/application_mailer.rb[m
+[1m+++ b/app/mailers/application_mailer.rb[m
+[36m@@ -2,4 +2,4 @@[m [mclass ApplicationMailer < ActionMailer::Base[m
+   default from: "support@example.com"[m
+ [m
+   layout "mailer"[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/mailers/order_mailer.rb b/app/mailers/order_mailer.rb[m
+[1mindex 032bc5d..f9c695e 100644[m
+[1m--- a/app/mailers/order_mailer.rb[m
+[1m+++ b/app/mailers/order_mailer.rb[m
+[36m@@ -1,5 +1,5 @@[m
+ class OrderMailer < ApplicationMailer[m
+[31m-  default from: 'Sam Ruby <depot@example.com>'[m
+[32m+[m[32m  default from: "Sam Ruby <depot@example.com>"[m
+ [m
+   # Subject can be set in your I18n file at config/locales/en.yml[m
+   # with the following lookup:[m
+[36m@@ -8,7 +8,7 @@[m [mclass OrderMailer < ApplicationMailer[m
+   #[m
+   def received(order)[m
+     @order = order[m
+[31m-    mail to: order.email, subject: 'Pragmatic Store Order Confirmation'[m
+[32m+[m[32m    mail to: order.email, subject: "Pragmatic Store Order Confirmation"[m
+   end[m
+ [m
+   # Subject can be set in your I18n file at config/locales/en.yml[m
+[36m@@ -18,7 +18,6 @@[m [mclass OrderMailer < ApplicationMailer[m
+   #[m
+   def shipped(order)[m
+     @order = order[m
+[31m-    mail to: order.email, subject: 'Pragmatic Store Order Shipped'[m
+[32m+[m[32m    mail to: order.email, subject: "Pragmatic Store Order Shipped"[m
+   end[m
+[31m-[m
+[31m-end [m
+[32m+[m[32mend[m
+[1mdiff --git a/app/mailers/support_request_mailer.rb b/app/mailers/support_request_mailer.rb[m
+[1mindex aa4ab80..332312f 100644[m
+[1m--- a/app/mailers/support_request_mailer.rb[m
+[1m+++ b/app/mailers/support_request_mailer.rb[m
+[36m@@ -1,5 +1,4 @@[m
+ class SupportRequestMailer < ApplicationMailer[m
+[31m-[m
+   def respond(support_request)[m
+     @support_request = support_request[m
+ [m
+[36m@@ -8,5 +7,4 @@[m [mclass SupportRequestMailer < ApplicationMailer[m
+       subject: "Response to your support request"[m
+     )[m
+   end[m
+[31m-[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/models/cart.rb b/app/models/cart.rb[m
+[1mindex e385757..e1d461e 100644[m
+[1m--- a/app/models/cart.rb[m
+[1m+++ b/app/models/cart.rb[m
+[36m@@ -12,7 +12,6 @@[m [mclass Cart < ApplicationRecord[m
+   end[m
+ [m
+   def total_price[m
+[31m-    line_items.sum {|item| item.product.price * item.quantity}[m
+[32m+[m[32m    line_items.sum { |item| item.product.price * item.quantity }[m
+   end[m
+[31m-[m
+ end[m
+[1mdiff --git a/app/models/order.rb b/app/models/order.rb[m
+[1mindex 80ee014..db9a0f6 100644[m
+[1m--- a/app/models/order.rb[m
+[1m+++ b/app/models/order.rb[m
+[36m@@ -30,7 +30,7 @@[m [mclass Order < ApplicationRecord[m
+       payment_details[:account] = pay_type_params[:account_number][m
+     when "Credit card"[m
+       payment_method = :credit_card[m
+[31m-      month,year = pay_type_params[:expiration_date].split(//)[m
+[32m+[m[32m      month, year = pay_type_params[:expiration_date].split(//)[m
+       payment_details[:cc_num] = pay_type_params[:credit_card_number][m
+       payment_details[:expiration_month] = month[m
+       payment_details[:expiration_year] = year[m
+[36m@@ -49,5 +49,4 @@[m [mclass Order < ApplicationRecord[m
+     raise payment_result.error[m
+     end[m
+   end[m
+[31m-[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/models/product.rb b/app/models/product.rb[m
+[1mindex 8e57e70..319d92c 100644[m
+[1m--- a/app/models/product.rb[m
+[1m+++ b/app/models/product.rb[m
+[36m@@ -8,10 +8,10 @@[m [mclass Product < ApplicationRecord[m
+   # }[m
+   # validates :title, length: {minimum: 10}[m
+   validates :permalink, uniqueness: true,[m
+[31m-                        format: { with: /\A[a-zA-Z0-9\-]+\z/, message: 'Cannot have special characters or spaces' },                         [m
+[31m-                        format: { with: /\A(?:\w+-){2,}\w+\z/, message: 'Cannot be less than 3 words and words have to be hyphen separated' }[m
+[32m+[m[32m                        format: { with: /\A[a-zA-Z0-9\-]+\z/, message: "Cannot have special characters or spaces" },[m
+[32m+[m[32m                        format: { with: /\A(?:\w+-){2,}\w+\z/, message: "Cannot be less than 3 words and words have to be hyphen separated" }[m
+ [m
+[31m-  validates :description, format: { with: /\A(?:\w+){4,9}\w+\z/, message: 'Should be between 5 and 10 words' }[m
+[32m+[m[32m  validates :description, format: { with: /\A(?:\w+){4,9}\w+\z/, message: "Should be between 5 and 10 words" }[m
+   validates :image_url, url: true[m
+   validates :discount_price, less_than_price: true[m
+   validates :discount_price, numericality: { less_than: :price }[m
+[36m@@ -21,9 +21,8 @@[m [mclass Product < ApplicationRecord[m
+ [m
+   private def ensure_not_referenced_by_any_line_item[m
+     unless line_item.empty?[m
+[31m-      errors.add(:base, 'Line Items present')[m
+[32m+[m[32m      errors.add(:base, "Line Items present")[m
+       throw :abort[m
+     end[m
+   end[m
+[31m-[m
+ end[m
+[1mdiff --git a/app/models/user.rb b/app/models/user.rb[m
+[1mindex eb57d75..5f89d47 100644[m
+[1m--- a/app/models/user.rb[m
+[1m+++ b/app/models/user.rb[m
+[36m@@ -4,7 +4,7 @@[m [mclass User < ApplicationRecord[m
+ [m
+   validates :name, presence: true[m
+   validates :email, uniqueness: true,[m
+[31m-                    format: { with: /@[a-z]+\.[a-z]+\z/, message: 'Email should end in @xyz.abc' }[m
+[32m+[m[32m                    format: { with: /@[a-z]+\.[a-z]+\z/, message: "Email should end in @xyz.abc" }[m
+ [m
+   class Error < StandardError[m
+   end[m
+[36m@@ -15,5 +15,4 @@[m [mclass User < ApplicationRecord[m
+       raise Error.new "Can't delete last user"[m
+     end[m
+   end[m
+[31m-[m
+ end[m
+[1mdiff --git a/app/validators/less_than_price_validator.rb b/app/validators/less_than_price_validator.rb[m
+[1mindex 8261d57..9b72f56 100644[m
+[1m--- a/app/validators/less_than_price_validator.rb[m
+[1m+++ b/app/validators/less_than_price_validator.rb[m
+[36m@@ -1,7 +1,7 @@[m
+ class LessThanPriceValidator < ActiveModel::EachValidator[m
+   def validate_each(record, attribute, value)[m
+     if value.present? && value >= record.price[m
+[31m-      record.errors.add(attribute, 'Must be less than price')[m
+[32m+[m[32m      record.errors.add(attribute, "Must be less than price")[m
+     end[m
+   end[m
+ end[m
+[1mdiff --git a/app/validators/url_validator.rb b/app/validators/url_validator.rb[m
+[1mindex 852f1fe..467abc9 100644[m
+[1m--- a/app/validators/url_validator.rb[m
+[1m+++ b/app/validators/url_validator.rb[m
+[36m@@ -3,7 +3,7 @@[m [mclass UrlValidator < ActiveModel::EachValidator[m
+ [m
+   def validate_each(record, attribute, value)[m
+     if value.present? && !value.match?(URLFORMAT)[m
+[31m-      record.errors.add(attribute, 'Must be in image format')[m
+[32m+[m[32m      record.errors.add(attribute, "Must be in image format")[m
+     end[m
+   end[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m
+[1mdiff --git a/bin/rubocop b/bin/rubocop[m
+[1mindex 60c9706..5a20504 100755[m
+[1m--- a/bin/rubocop[m
+[1m+++ b/bin/rubocop[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-#!/usr/bin/env ruby.exe[m
+[32m+[m[32m#!/usr/bin/env ruby[m
+ require "rubygems"[m
+ require "bundler/setup"[m
+ [m
+[1mdiff --git a/config/application.rb b/config/application.rb[m
+[1mindex d452054..2269ae0 100644[m
+[1m--- a/config/application.rb[m
+[1m+++ b/config/application.rb[m
+[36m@@ -24,6 +24,6 @@[m [mmodule Depot[m
+     # config.time_zone = "Central Time (US & Canada)"[m
+     # config.eager_load_paths << Rails.root.join("extras")[m
+ [m
+[31m-    config.autoload_paths << Rails.root.join('app/validators')[m
+[32m+[m[32m    config.autoload_paths << Rails.root.join("app/validators")[m
+   end[m
+ end[m
+[1mdiff --git a/config/initializers/i18n.rb b/config/initializers/i18n.rb[m
+[1mindex 3706819..e59e6ec 100644[m
+[1m--- a/config/initializers/i18n.rb[m
+[1m+++ b/config/initializers/i18n.rb[m
+[36m@@ -1,7 +1,7 @@[m
+[31m-#encoding: utf-8[m
+[32m+[m[32m# encoding: utf-8[m
+[32m+[m
+ I18n.default_locale = :en[m
+ LANGUAGES = [[m
+[31m-  ['English', 'en'],[m
+[31m-  ["Espa&ntilde;ol".html_safe, 'es'][m
+[32m+[m[32m  [ "English", "en" ],[m
+[32m+[m[32m  [ "Espa&ntilde;ol".html_safe, "es" ][m
+ ][m
+[31m-  [m
+\ No newline at end of file[m
+[1mdiff --git a/config/routes.rb b/config/routes.rb[m
+[1mindex 26616ba..4eb2c19 100644[m
+[1m--- a/config/routes.rb[m
+[1m+++ b/config/routes.rb[m
+[36m@@ -1,9 +1,9 @@[m
+ Rails.application.routes.draw do[m
+[31m-  get 'admin' => 'admin#index'[m
+[32m+[m[32m  get "admin" => "admin#index"[m
+   controller :sessions do[m
+[31m-    get 'login' => :new[m
+[31m-    post 'login' => :create[m
+[31m-    delete 'logout' => :destroy[m
+[32m+[m[32m    get "login" => :new[m
+[32m+[m[32m    post "login" => :create[m
+[32m+[m[32m    delete "logout" => :destroy[m
+   end[m
+   get "sessions/new"[m
+   get "sessions/create"[m
+[36m@@ -12,7 +12,7 @@[m [mRails.application.routes.draw do[m
+ [m
+   resources :support_requests, only: %i[ index update ][m
+ [m
+[31m-  scope '(:locale)' do[m
+[32m+[m[32m  scope "(:locale)" do[m
+     resources :orders[m
+     resources :line_items do[m
+       member do[m
+[36m@@ -28,8 +28,8 @@[m [mRails.application.routes.draw do[m
+ [m
+     resources :products[m
+ [m
+[31m-    root 'store#index', as: 'store_index'[m
+[31m-  end [m
+[32m+[m[32m    root "store#index", as: "store_index"[m
+[32m+[m[32m  end[m
+ [m
+   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html[m
+ [m
+[1mdiff --git a/db/migrate/20261103070503_create_support_requests.rb b/db/migrate/20261103070503_create_support_requests.rb[m
+[1mindex a2725fe..ca835b8 100644[m
+[1m--- a/db/migrate/20261103070503_create_support_requests.rb[m
+[1m+++ b/db/migrate/20261103070503_create_support_requests.rb[m
+[36m@@ -1,7 +1,6 @@[m
+ class CreateSupportRequests < ActiveRecord::Migration[8.1][m
+   def change[m
+     create_table :support_requests do |t|[m
+[31m-      [m
+       t.string :email, comment: "Email of the submitter"[m
+       t.string :subject, comment: "Subject of their support email"[m
+       t.text :body, comment: "Body of their support email"[m
+[1mdiff --git a/db/seeds.rb b/db/seeds.rb[m
+[1mindex 48c2314..76560ed 100644[m
+[1m--- a/db/seeds.rb[m
+[1m+++ b/db/seeds.rb[m
+[36m@@ -7,10 +7,11 @@[m
+ # Visit https://pragprog.com/titles/rails7 for more book information.[m
+ #---[m
+ # encoding: utf-8[m
+[32m+[m
+ Product.delete_all[m
+ Product.create!(title: 'Docker for Rails Developers',[m
+   description:[m
+[31m-    %{<p>[m
+[32m+[m[32m    %(<p>[m
+       <em>Build, Ship, and Run Your Applications Everywhere</em> Docker does[m
+       for DevOps what Rails did for web development—it gives you a new set[m
+       of superpowers. Gone are “works on my machine” woes and lengthy setup[m
+[36m@@ -20,13 +21,13 @@[m [mProduct.create!(title: 'Docker for Rails Developers',[m
+       rapidly becoming fundamental to software development. Go from zero all[m
+       the way to production as Docker transforms the massive leap of[m
+       deploying your app in the cloud into a baby step.[m
+[31m-      </p>},[m
+[32m+[m[32m      </p>),[m
+   image_url: 'ridocker.jpg',[m
+   price: 19.95)[m
+ # . . .[m
+ Product.create!(title: 'Design and Build Great Web APIs',[m
+   description:[m
+[31m-    %{<p>[m
+[32m+[m[32m    %(<p>[m
+       <em>Robust, Reliable, and Resilient</em>[m
+       APIs are transforming the business world at an increasing pace. Gain[m
+       the essential skills needed to quickly design, build, and deploy[m
+[36m@@ -37,14 +38,14 @@[m [mProduct.create!(title: 'Design and Build Great Web APIs',[m
+       panic. Tackle just about any API challenge with more than a dozen[m
+       open-source utilities and common programming patterns you can apply[m
+       right away.[m
+[31m-      </p>},[m
+[32m+[m[32m      </p>),[m
+   image_url: 'maapis.jpg',[m
+   price: 24.95)[m
+ # . . .[m
+ [m
+ Product.create!(title: 'Modern CSS with Tailwind',[m
+   description:[m
+[31m-    %{<p>[m
+[32m+[m[32m    %(<p>[m
+       <em>Flexible Styling Without the Fuss</em>[m
+       Tailwind CSS is an exciting new CSS framework that allows you to[m
+       design your site by composing simple utility classes to create complex[m
+[36m@@ -54,6 +55,6 @@[m [mProduct.create!(title: 'Modern CSS with Tailwind',[m
+       learn how to use the Tailwind for its flexibility and its consistency,[m
+       from the smallest detail of your typography to the entire design of[m
+       your site.[m
+[31m-      </p>},[m
+[32m+[m[32m      </p>),[m
+   image_url: 'tailwind.jpg',[m
+   price: 18.95)[m
+[1mdiff --git a/lib/tasks/pago.rb b/lib/tasks/pago.rb[m
+[1mindex 98c5547..860c33c 100644[m
+[1m--- a/lib/tasks/pago.rb[m
+[1m+++ b/lib/tasks/pago.rb[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-require 'ostruct'[m
+[32m+[m[32mrequire "ostruct"[m
+ class Pago[m
+   def self.make_payment(order_id:, payment_method:, payment_details:)[m
+     case payment_method[m
+[36m@@ -21,4 +21,4 @@[m [mclass Pago[m
+     Rails.logger.info "Done Processing Payment"[m
+     OpenStruct.new(succeeded?: true)[m
+   end[m
+[31m-end[m
+\ No newline at end of file[m
+[32m+[m[32mend[m

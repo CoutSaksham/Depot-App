@@ -8,10 +8,10 @@ class Product < ApplicationRecord
   # }
   # validates :title, length: {minimum: 10}
   validates :permalink, uniqueness: true,
-                        format: { with: /\A[a-zA-Z0-9\-]+\z/, message: 'Cannot have special characters or spaces' },                         
-                        format: { with: /\A(?:\w+-){2,}\w+\z/, message: 'Cannot be less than 3 words and words have to be hyphen separated' }
+                        format: { with: /\A[a-zA-Z0-9\-]+\z/, message: "Cannot have special characters or spaces" },
+                        format: { with: /\A(?:\w+-){2,}\w+\z/, message: "Cannot be less than 3 words and words have to be hyphen separated" }
 
-  validates :description, format: { with: /\A(?:\w+){4,9}\w+\z/, message: 'Should be between 5 and 10 words' }
+  validates :description, format: { with: /\A(?:\w+){4,9}\w+\z/, message: "Should be between 5 and 10 words" }
   validates :image_url, url: true
   validates :discount_price, less_than_price: true
   validates :discount_price, numericality: { less_than: :price }
@@ -21,9 +21,8 @@ class Product < ApplicationRecord
 
   private def ensure_not_referenced_by_any_line_item
     unless line_item.empty?
-      errors.add(:base, 'Line Items present')
+      errors.add(:base, "Line Items present")
       throw :abort
     end
   end
-
 end

@@ -1,5 +1,4 @@
 class SupportRequestMailer < ApplicationMailer
-
   def respond(support_request)
     @support_request = support_request
 
@@ -8,5 +7,4 @@ class SupportRequestMailer < ApplicationMailer
       subject: "Response to your support request"
     )
   end
-
 end

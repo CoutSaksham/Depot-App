@@ -95,6 +95,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+            
+      - name: Run RuboCop
+        run: bin/rubocop -f github
 
       - name: Run tests
         env:

@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, uniqueness: true,
-                    format: { with: /@[a-z]+\.[a-z]+\z/, message: 'Email should end in @xyz.abc' }
+                    format: { with: /@[a-z]+\.[a-z]+\z/, message: "Email should end in @xyz.abc" }
 
   class Error < StandardError
   end
@@ -15,5 +15,4 @@ class User < ApplicationRecord
       raise Error.new "Can't delete last user"
     end
   end
-
 end
