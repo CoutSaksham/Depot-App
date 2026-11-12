@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'admin' => 'admin#index'
+  get "admin" => "admin#index"
   controller :sessions do
-    get 'login' => :new
-    post 'login' => :create
-    delete 'logout' => :destroy
+    get "login" => :new
+    post "login" => :create
+    delete "logout" => :destroy
   end
   get "sessions/new"
   get "sessions/create"
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :support_requests, only: %i[ index update ]
 
-  scope '(:locale)' do
+  scope "(:locale)" do
     resources :orders
     resources :line_items do
       member do
@@ -26,9 +26,9 @@ Rails.application.routes.draw do
       end
     end
 
-    root 'store#index', as: 'store_index'
+    root "store#index", as: "store_index"
     resources :products
-  end 
+  end
 
   resources :products
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
