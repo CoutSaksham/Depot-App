@@ -4,7 +4,10 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, uniqueness: true,
-                    format: { with: /@[a-z]+\.[a-z]+\z/, message: 'Email should end in @xyz.abc' }
+    format: {
+      with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/,
+      message: "must be a valid email address"
+    }
 
   class Error < StandardError
   end
