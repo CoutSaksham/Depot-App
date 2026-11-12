@@ -25,9 +25,13 @@ module Depot
     # config.eager_load_paths << Rails.root.join("extras")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     config.autoload_paths << Rails.root.join("app/validators")
 =======
     config.autoload_paths << Rails.root.join('app/validators')
 >>>>>>> 84be896 (Added validations in products, line_items and users models)
+=======
+    config.autoload_paths << Rails.root.join("app/validators")
+>>>>>>> 34d4144 (Fix email validation security warning)
   end
 end

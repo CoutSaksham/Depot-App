@@ -43,10 +43,14 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 gem "fiddle"
 =======
 gem 'fiddle'
 >>>>>>> 84be896 (Added validations in products, line_items and users models)
+=======
+gem "fiddle"
+>>>>>>> 34d4144 (Fix email validation security warning)
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
