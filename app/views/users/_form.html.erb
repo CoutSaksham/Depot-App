@@ -29,6 +29,16 @@
         placeholder: "Enter your full name" %>
   </div>
 
+  <!-- Email -->
+  <div style="margin:20px 0;">
+    <%= form.label :email, "Email:",
+        style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+
+    <%= form.text_field :email,
+        style: "width:100%; padding:11px 13px; border:1px solid #{user.errors[:email].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; font-size:14px; color:#1e293b; box-sizing:border-box; outline:none;",
+        placeholder: "Enter your email address" %>
+  </div>
+
   <!-- Password -->
   <div style="margin:20px 0;">
     <%= form.label :password, "Password:",
