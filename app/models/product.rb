@@ -7,11 +7,21 @@ class Product < ApplicationRecord
   # message: 'must be a URL for GIF, JPG or PNG image.'
   # }
   # validates :title, length: {minimum: 10}
-  validates :permalink, uniqueness: true,
-                        format: { with: /\A[a-zA-Z0-9\-]+\z/, message: "Cannot have special characters or spaces" },
-                        format: { with: /\A(?:\w+-){2,}\w+\z/, message: "Cannot be less than 3 words and words have to be hyphen separated" }
+  validates :permalink, uniqueness: true
 
-  validates :description, format: { with: /\A(?:\w+){4,9}\w+\z/, message: "Should be between 5 and 10 words" }
+  validates :permalink,
+            format: {
+              with: /\A[a-zA-Z0-9\-]+\z/,
+              message: "Cannot have special characters or spaces"
+            }
+
+  validates :permalink,
+            format: {
+              with: /\A(?:[^\-]+-){2,}\w+\z/,
+              message: "Cannot be less than 3 words and words have to be hyphen separated"
+            }
+
+  validates :description, format: { with: /\A(?:\w+\s){4,9}\w+\z/, message: "Should be between 5 and 10 words" }
   validates :image_url, url: true
   validates :discount_price, less_than_price: true
   validates :discount_price, numericality: { less_than: :price }
