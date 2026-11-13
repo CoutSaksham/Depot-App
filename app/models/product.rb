@@ -27,6 +27,10 @@ class Product < ApplicationRecord
   validates :discount_price, numericality: { less_than: :price }
 
   has_many :line_items
+
+  after_initialize do
+    self.title ||= 'abc'
+  end
   before_destroy :ensure_not_referenced_by_any_line_item
 
   private def ensure_not_referenced_by_any_line_item
