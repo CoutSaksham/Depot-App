@@ -77,4 +77,8 @@ group :test do
   gem "selenium-webdriver"
 end
 
+<<<<<<< HEAD
 gem "fiddle"
+=======
+gem 'fiddle'
+>>>>>>> 37f4692 (Callbacks task 1)
