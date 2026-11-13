@@ -69,4 +69,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'fiddle'
+gem "fiddle"
