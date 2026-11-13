@@ -45,9 +45,15 @@ class Product < ApplicationRecord
   private def permalink_words
     permalink ? permalink.split("-") : []
   end
+<<<<<<< HEAD
 
   private def set_default_title
     self.title ||= DEFAULT_TITLE
+=======
+  
+  private def set_default_title
+    self.title ||= "abc"
+>>>>>>> b5d86cd (Callbacks exercises)
   end
 
   private def set_default_discount_price
