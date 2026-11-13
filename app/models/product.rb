@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   MINIMUM_DESCRIPTION_WORDS = 5
   MAXIMUM_DESCRIPTION_WORDS = 10
   EXACT_NUMBER_OF_PERMALINK_WORDS = 3
+  has_many :line_items
 
   validates :title, :description, :image_url, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
@@ -24,13 +25,9 @@ class Product < ApplicationRecord
   validates :image_url, url: true
   validates :discount_price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :discount_price, less_than_price: true
-  validates :discount_price, numericality: { less_than: :price }
+  validates :discount_price, numericality: { less_than_equal_to: :price }
 
-  has_many :line_items
-
-  after_initialize do
-    self.title ||= 'abc'
-  end
+  after_initialize :set_default_title, :set_default_discount_price
   before_destroy :ensure_not_referenced_by_any_line_item
 
   private def ensure_not_referenced_by_any_line_item
@@ -46,5 +43,13 @@ class Product < ApplicationRecord
 
   private def permalink_words
     permalink ? permalink.split("-") : []
+  end
+  
+  private def set_default_title
+    self.title ||= "abc"
+  end
+
+  private def set_default_discount_price
+    self.discount_price ||= self.price
   end
 end
