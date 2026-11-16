@@ -7,21 +7,20 @@ class Product < ApplicationRecord
   # message: 'must be a URL for GIF, JPG or PNG image.'
   # }
   # validates :title, length: {minimum: 10}
-  validates :permalink, uniqueness: { case_sensitive: false }
-
-  validates :permalink,
+  validates :permalink, uniqueness: { case_sensitive: false },
             format: {
-              with: ONLY_WORDS,
+              with: ONLY_LETTERS_NUMBERS_AND_HYPHENS,
               message: "Cannot have special characters or spaces"
-            }
+            }, allow_blank: true
 
-  validates :permalink,
-            format: {
-              with: /\A(?:[^\-]+-){2,}[^\-]+\z/,
-              message: "Cannot be less than 3 words and words have to be hyphen separated"
-            }
+  validates :permalink_words, length: { is: EXACT_NUMBER_OF_PERMALINK_WORDS }, allow_blank: true
 
-  validates :description, format: { with: /\A(?:\w+\s){4,9}\w+\z/, message: "Should be between 5 and 10 words" }
+  validates_length_of :description_words,
+            in: MINIMUM_DESCRIPTION_WORDS..MAXIMUM_DESCRIPTION_WORDS,
+            too_short: "must be longer than #{MINIMUM_DESCRIPTION_WORDS}",
+            too_long: "must be shorter than #{MAXIMUM_DESCRIPTION_WORDS}",
+            allow_blank: true
+
   validates :image_url, url: true
   validates :discount_price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :discount_price, less_than_price: true
@@ -35,5 +34,13 @@ class Product < ApplicationRecord
       errors.add(:base, "Line Items present")
       throw :abort
     end
+  end
+
+  private def description_words
+    description ? description.scan(WORDS) : []
+  end
+
+  private def permalink_words
+    permalink ? permalink.split("-") : []
   end
 end

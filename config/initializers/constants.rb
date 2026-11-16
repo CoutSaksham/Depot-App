@@ -1,3 +1,8 @@
-ONLY_WORDS = /\A[a-zA-Z0-9\-]+\z/
+ONLY_LETTERS_NUMBERS_AND_HYPHENS = /\A[a-zA-Z0-9\-]+\z/
 EMAIL_FORMAT = /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/
 IMAGE_URL_FORMAT = /\Ahttps:\/\/.+\.(?:gif|jpg|jpeg|png)\z/i
+WORDS = /\w+/
+
+MINIMUM_DESCRIPTION_WORDS = 5
+MAXIMUM_DESCRIPTION_WORDS = 10
+EXACT_NUMBER_OF_PERMALINK_WORDS = 3
