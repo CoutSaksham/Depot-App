@@ -1,9 +1,7 @@
 class UrlValidator < ActiveModel::EachValidator
-  URLFORMAT = /\.(?:gif|jpg|jpeg|png)\z/
-
   def validate_each(record, attribute, value)
-    if value.present? && !value.match?(URLFORMAT)
-      record.errors.add(attribute, "Must be in image format")
+    if value.present? && !value.match?(IMAGE_URL_FORMAT)
+      record.errors.add(attribute, "Must be a valid URL in image format")
     end
   end
 end

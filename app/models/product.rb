@@ -1,28 +1,29 @@
 class Product < ApplicationRecord
   validates :title, :description, :image_url, presence: true
-  validates :price, numericality: { greater_than_or_equal_to: 0.01 } # price presence validity is not needed since numericality automatically converts emtpy and only whitespace conaitning strings to nil and also rejects nil values
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
   validates :title, uniqueness: true
   # validates :image_url, allow_blank: true, format: {
   # with: %r{\.(gif|jpg|png)\z}i,
   # message: 'must be a URL for GIF, JPG or PNG image.'
   # }
   # validates :title, length: {minimum: 10}
-  validates :permalink, uniqueness: true
+  validates :permalink, uniqueness: { case_sensitive: false }
 
   validates :permalink,
             format: {
-              with: /\A[a-zA-Z0-9\-]+\z/,
+              with: ONLY_WORDS,
               message: "Cannot have special characters or spaces"
             }
 
   validates :permalink,
             format: {
-              with: /\A(?:[^\-]+-){2,}\w+\z/,
+              with: /\A(?:[^\-]+-){2,}[^\-]+\z/,
               message: "Cannot be less than 3 words and words have to be hyphen separated"
             }
 
   validates :description, format: { with: /\A(?:\w+\s){4,9}\w+\z/, message: "Should be between 5 and 10 words" }
   validates :image_url, url: true
+  validates :discount_price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :discount_price, less_than_price: true
   validates :discount_price, numericality: { less_than: :price }
 
