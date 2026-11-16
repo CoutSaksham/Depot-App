@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   after_destroy :ensure_an_admin_remains
-  after_create :send_welcome_mail
+  after_create_commit :send_welcome_mail
   before_destroy :ensure_admin_is_not_destroyed
   before_update :ensure_admin_is_not_updated
 
