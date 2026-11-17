@@ -58,7 +58,7 @@ class UsersController < ApplicationController
       redirect_to users_path,
                 notice: @user.errors.full_messages.to_sentence,
                 status: :see_other
-    end
+      end
   end
 
   rescue_from "User::Error" do |exception|
