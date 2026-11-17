@@ -41,7 +41,7 @@ class UsersController < ApplicationController
         format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
-        format.html { render :edit, status: :unprocessable_content }
+        format.html { render :edit, notice: @user.errors.full_messages.to_sentence, status: :unprocessable_content }
         format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
@@ -49,11 +49,15 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+    if @user.destroy
+      respond_to do |format|
+        format.html { redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to users_path,
+                notice: @user.errors.full_messages.to_sentence,
+                status: :see_other
     end
   end
 
