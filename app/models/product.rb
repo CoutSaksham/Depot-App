@@ -44,7 +44,7 @@ class Product < ApplicationRecord
   private def permalink_words
     permalink ? permalink.split("-") : []
   end
-  
+
   private def set_default_title
     self.title ||= "abc"
   end
