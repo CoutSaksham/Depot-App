@@ -1,12 +1,12 @@
 class Product < ApplicationRecord
+  MINIMUM_DESCRIPTION_WORDS = 5
+  MAXIMUM_DESCRIPTION_WORDS = 10
+  EXACT_NUMBER_OF_PERMALINK_WORDS = 3
+
   validates :title, :description, :image_url, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
   validates :title, uniqueness: true
-  # validates :image_url, allow_blank: true, format: {
-  # with: %r{\.(gif|jpg|png)\z}i,
-  # message: 'must be a URL for GIF, JPG or PNG image.'
-  # }
-  # validates :title, length: {minimum: 10}
+
   validates :permalink, uniqueness: { case_sensitive: false },
             format: {
               with: ONLY_LETTERS_NUMBERS_AND_HYPHENS,
