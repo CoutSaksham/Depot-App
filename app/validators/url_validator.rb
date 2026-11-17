@@ -5,3 +5,4 @@ class UrlValidator < ActiveModel::EachValidator
     end
   end
 end
+
