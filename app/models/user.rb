@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   ADMIN_EMAIL = "admin@depot.com".freeze
 
+  has_many :orders
   has_secure_password
 
   validates :name, presence: true
@@ -14,13 +15,6 @@ class User < ApplicationRecord
   after_create_commit :send_welcome_mail
   before_destroy :ensure_admin_is_not_destroyed
   before_update :ensure_admin_is_not_updated
-
-  validates :name, presence: true
-  validates :email, uniqueness: true,
-    format: {
-      with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/,
-      message: "must be a valid email address"
-    }
 
   class Error < StandardError
   end
