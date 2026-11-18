@@ -2,7 +2,9 @@ class Product < ApplicationRecord
   MINIMUM_DESCRIPTION_WORDS = 5
   MAXIMUM_DESCRIPTION_WORDS = 10
   EXACT_NUMBER_OF_PERMALINK_WORDS = 3
-  has_many :line_items
+  DEFAULT_TITLE = "abc"
+
+  has_many :line_items, dependent: :destroy
 
   validates :title, :description, :image_url, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
@@ -13,7 +15,6 @@ class Product < ApplicationRecord
               with: ONLY_LETTERS_NUMBERS_AND_HYPHENS,
               message: "Cannot have special characters or spaces"
             }, allow_blank: true
-
   validates :permalink_words, length: { is: EXACT_NUMBER_OF_PERMALINK_WORDS }, allow_blank: true
 
   validates_length_of :description_words,
@@ -46,7 +47,7 @@ class Product < ApplicationRecord
   end
 
   private def set_default_title
-    self.title ||= "abc"
+    self.title ||= DEFAULT_TITLE
   end
 
   private def set_default_discount_price
