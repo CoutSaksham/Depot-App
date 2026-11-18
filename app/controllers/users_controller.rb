@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include Pagy::Method
+
   before_action :set_user, only: %i[ show edit update destroy ]
 
   # GET /users or /users.json
@@ -63,7 +65,7 @@ class UsersController < ApplicationController
 
   def orders
     @user = User.find(session[:user_id])
-    @orders = @user.orders
+    @pagy, @orders = pagy(@user.orders, limit: 5)
   end
 
   rescue_from "User::Error" do |exception|

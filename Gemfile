@@ -68,3 +68,5 @@ group :test do
 end
 
 gem "fiddle"
+
+gem "pagy"

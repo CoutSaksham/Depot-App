@@ -17,7 +17,7 @@ class Order < ApplicationRecord
   def add_line_items_from_cart(cart)
     cart.line_items.each do |item|
       item.cart_id = nil
-      line_items << item
+      line_items << item  
     end
   end
 
@@ -49,5 +49,9 @@ class Order < ApplicationRecord
     else
     raise payment_result.error
     end
+  end
+
+  def total_price
+    line_items.sum { |item| item.product.discount_price * item.quantity }
   end
 end
