@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  ADMIN_EMAIL = "admin@depot.com"
+  ADMIN_EMAIL = "admin@depot.com".freeze
 
   has_secure_password
 
@@ -30,12 +30,14 @@ class User < ApplicationRecord
 
   private def ensure_admin_is_not_destroyed
     return unless is_admin?
+
     errors.add(:base, "Cannot destroy the admin")
     throw :abort
   end
 
   private def ensure_admin_is_not_updated
     return unless was_admin?
+
     errors.add(:base, "Cannot update the admin")
     throw :abort
   end

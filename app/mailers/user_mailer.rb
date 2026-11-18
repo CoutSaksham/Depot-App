@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(
       to: @user.email,
-      subject: t('.welcome')
+      subject: t(".welcome")
     )
   end
 end
