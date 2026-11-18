@@ -2,6 +2,9 @@ class Product < ApplicationRecord
   MINIMUM_DESCRIPTION_WORDS = 5
   MAXIMUM_DESCRIPTION_WORDS = 10
   EXACT_NUMBER_OF_PERMALINK_WORDS = 3
+  DEFAULT_TITLE = "abc".freeze
+
+  has_many :line_items, dependent: :restrict_with_error
 
   validates :title, :description, :image_url, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
@@ -12,7 +15,6 @@ class Product < ApplicationRecord
               with: ONLY_LETTERS_NUMBERS_AND_HYPHENS,
               message: "Cannot have special characters or spaces"
             }, allow_blank: true
-
   validates :permalink_words, length: { is: EXACT_NUMBER_OF_PERMALINK_WORDS }, allow_blank: true
 
   validates_length_of :description_words,
@@ -24,9 +26,9 @@ class Product < ApplicationRecord
   validates :image_url, url: true
   validates :discount_price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :discount_price, less_than_price: true
-  validates :discount_price, numericality: { less_than: :price }
+  validates :discount_price, numericality: { less_than_or_equal_to: :price }
 
-  has_many :line_items
+  before_validation :set_default_title, :set_default_discount_price
   before_destroy :ensure_not_referenced_by_any_line_item
 
   private def ensure_not_referenced_by_any_line_item
@@ -42,5 +44,13 @@ class Product < ApplicationRecord
 
   private def permalink_words
     permalink ? permalink.split("-") : []
+  end
+
+  private def set_default_title
+    self.title ||= DEFAULT_TITLE
+  end
+
+  private def set_default_discount_price
+    self.discount_price ||= self.price
   end
 end

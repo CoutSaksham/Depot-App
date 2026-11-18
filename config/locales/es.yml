@@ -70,3 +70,5 @@ es:
         email: "E-mail"
         pay_type: "Forma de pago"
   thanks: "Gracias por su pedido" 
+  user_mailer:
+    welcome: "Bienvenido!"

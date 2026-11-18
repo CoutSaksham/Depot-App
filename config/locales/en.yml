@@ -76,4 +76,5 @@ en:
     po:
       po_number: "PO #"
   thanks: "Thank you for your order"
-
+  user_mailer:
+    welcome: "Welcome!"
