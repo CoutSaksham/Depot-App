@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
-  
-  get "users/orders", to: 'users#orders'
+
+  get "users/orders", to: "users#orders"
+  get "users/line_items", to: "users#line_items"
   resources :users
 
   resources :support_requests, only: %i[ index update ]
@@ -28,7 +29,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :products 
+    resources :products
 
     root "store#index", as: "store_index"
   end
