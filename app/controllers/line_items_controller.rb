@@ -58,6 +58,8 @@ class LineItemsController < ApplicationController
   end
 
   def update_quantity
+    return unless @line_item.cart_id
+
     @line_item.quantity += params[:num].to_i
     if @line_item.quantity <= 0
       destroy

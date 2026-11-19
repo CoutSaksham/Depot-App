@@ -1,6 +1,7 @@
 require 'tasks\pago'
 
 class Order < ApplicationRecord
+  belongs_to :user
   has_many :line_items, dependent: :destroy
   has_many :support_requests, dependent: :destroy
 
@@ -48,5 +49,9 @@ class Order < ApplicationRecord
     else
     raise payment_result.error
     end
+  end
+
+  def total_price
+    line_items.sum { |item| item.product.discount_price * item.quantity }
   end
 end

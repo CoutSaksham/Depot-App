@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  include Pagy::Method
+
+  before_action :set_user_from_params, only: %i[ show edit update destroy ]
+  before_action :set_user_from_session, only: %i[ orders line_items ]
 
   # GET /users or /users.json
   def index
@@ -61,15 +64,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def orders
+    @pagy, @orders = pagy(@user.orders, limit: 5)
+  end
+
+  def line_items
+    @pagy, @line_items = pagy(@user.line_items + Cart.find(session[:cart_id]).line_items, limit: 5)
+  end
+
   rescue_from "User::Error" do |exception|
     redirect_to users_url, notice: exception.message
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
+    def set_user_from_params
       @user = User.find(params.expect(:id))
+    end
+
+    def set_user_from_session
+      @user = User.find(session[:user_id])
     end
 
     # Only allow a list of trusted parameters through.
