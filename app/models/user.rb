@@ -12,10 +12,10 @@ class User < ApplicationRecord
       message: "must be a valid email address"
     }
 
-  after_destroy :ensure_an_admin_remains
-  after_create_commit :send_welcome_mail
   before_destroy :ensure_admin_is_not_destroyed
   before_update :ensure_admin_is_not_updated
+  after_destroy :ensure_an_admin_remains
+  after_create_commit :send_welcome_mail
 
   class Error < StandardError
   end
