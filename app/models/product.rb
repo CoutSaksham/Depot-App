@@ -32,6 +32,10 @@ class Product < ApplicationRecord
   before_validation :set_default_title, unless: :title?
   before_validation :set_default_discount_price, unless: :discount_price?
 
+  scope :enabled, -> { where(enabled: true) }
+  scope :objects_present_in_a_line_item, -> { joins(:line_items).distinct }
+  scope :titles_present_in_a_line_item, -> { objects_present_in_a_line_item.pluck(:title) }
+
   private def description_words
     description ? description.scan(WORDS) : []
   end
