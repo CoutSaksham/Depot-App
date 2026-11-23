@@ -43,6 +43,10 @@ class Product < ApplicationRecord
   scope :has_line_item, -> { joins(:line_items).distinct }
   scope :has_line_item_titles, -> { has_line_item.pluck(:title) }
 
+  scope :enabled, -> { where(enabled: true) }
+  scope :objects_present_in_a_line_item, -> { joins(:line_items).distinct }
+  scope :titles_present_in_a_line_item, -> { objects_present_in_a_line_item.pluck(:title) }
+
   private def description_words
     description ? description.scan(WORDS) : []
   end
