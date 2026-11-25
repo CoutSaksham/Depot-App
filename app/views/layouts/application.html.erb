@@ -109,6 +109,13 @@
           <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px;">
 
             <li>
+              <%= link_to "Categories", categories_path,
+                  style: "display:block; padding:10px 13px; color:#f0fdf4; text-decoration:none; font-size:14px; font-weight:500; border-radius:7px; background:rgba(255,255,255,0.06);",
+                  onmouseover: "this.style.background='rgba(255,255,255,0.15)'",
+                  onmouseout: "this.style.background='rgba(255,255,255,0.06)'" %>
+            </li>
+
+            <li>
               <%= link_to "Orders", orders_path,
                   style: "display:block; padding:10px 13px; color:#f0fdf4; text-decoration:none; font-size:14px; font-weight:500; border-radius:7px; background:rgba(255,255,255,0.06);",
                   onmouseover: "this.style.background='rgba(255,255,255,0.15)'",

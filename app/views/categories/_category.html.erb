@@ -1,0 +1,30 @@
+<div id="<%= dom_id category %>"
+     style="width:100%; max-width:500px; margin:20px auto; padding:24px; box-sizing:border-box; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 4px 12px rgba(15,23,42,0.06); color:#334155;">
+
+  <div style="margin-bottom:20px;">
+    <strong style="display:block; font-size:12px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Name</strong>
+    <div style="font-size:20px; font-weight:700; color:#0f172a;">
+      <%= category.name %>
+    </div>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <strong style="display:block; font-size:12px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Associated Products</strong>
+    <div style="font-size:14px; line-height:1.6; color:#475569; overflow-wrap:anywhere;">
+      <%= category.products_count %>
+    </div>
+  </div>
+
+  <% unless category.parent_category_id.present? %>
+    <div style="margin-bottom:20px;">
+      <strong>Sub Categories</strong>
+
+      <ul>
+        <% category.sub_categories.each do |sc| %>
+          <li><%= render sc %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+</div>
