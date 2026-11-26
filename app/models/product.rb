@@ -40,10 +40,10 @@ class Product < ApplicationRecord
   end
 
   scope :enabled, -> { where(enabled: true) }
-  scope :has_line_item, -> { joins(:line_items).distinct }
-  
+  scope :associated_with_line_item, -> { joins(:line_items).distinct }
+
   def self.has_line_item_titles
-    has_line_item.pluck(:title)
+    associated_with_line_item.pluck(:title)
   end
 
   scope :enabled, -> { where(enabled: true) }
