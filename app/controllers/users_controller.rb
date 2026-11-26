@@ -7,6 +7,8 @@ class UsersController < ApplicationController
   before_action :current_user, only: %i[ orders line_items ]
   before_action :set_cart, only: %i[ line_items ]
 
+  layout "my_orders", only: %i[ orders line_items ]
+
   # GET /users or /users.json
   def index
     @users = User.order(:name)
