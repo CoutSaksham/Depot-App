@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="margin:0; padding:0; background:#f8fafc; font-family:Arial, sans-serif; color:#1e293b;">
+
+  <header style="padding:22px 32px; background:#15803d; color:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+    <p style="margin:5px 0 0; color:#dcfce7; font-size:13px;">
+      View and manage your orders
+    </p>
+  </header>
+
+  <main style="width:100%; max-width:1100px; box-sizing:border-box; margin:30px auto; padding:0 20px;">
+
+    <div style="padding:25px; background:#ffffff; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.05);">
+
+      <%= yield %>
+
+    </div>
+
+  </main>
+
+  <footer style="padding:18px; text-align:center; color:#64748b; font-size:12px;">
+    The Pragmatic Bookshelf
+  </footer>
+
+</body>
+</html>

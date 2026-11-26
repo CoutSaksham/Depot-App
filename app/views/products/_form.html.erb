@@ -89,11 +89,19 @@
         style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:category].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
   </div>
 
+  <div>
+    <%= form.label :images, "Product Images" %>
+
+    <%= form.file_field :images,
+        multiple: true,
+        accept: "image/*" %>
+  </div>
+
     <%= form.submit(product.new_record? ? "Create Product" : "Update Product",
         style: "display:block; width:100%; padding:11px 16px; border:none; border-radius:8px; background:#2563eb; color:#ffffff; font-size:14px; font-weight:600; cursor:pointer;") %>
 
   </div>
 <% end %>
-<%= render %>
+
 
 
