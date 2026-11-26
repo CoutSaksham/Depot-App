@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.build_address
   end
 
   # GET /users/1/edit
@@ -87,6 +88,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email, :password, :password_confirmation, address_attributes: [ :street, :city, :state, :country, :pincode ]])
     end
 end

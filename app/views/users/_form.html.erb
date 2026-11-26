@@ -11,6 +11,7 @@
         <% user.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
+
       </ul>
     </div>
   <% end %>
@@ -59,6 +60,10 @@
         style: "width:100%; padding:11px 13px; border:1px solid #{user.errors[:password_confirmation].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; font-size:14px; color:#1e293b; box-sizing:border-box; outline:none;",
         placeholder: "Re-enter your password" %>
   </div>
+
+  <%= form.fields_for :address do |address_form| %>
+    <%= render "addresses/fields", form: address_form, address: address_form.object %>
+  <% end %>
 
   <!-- Submit Button -->
   <div style="margin-top:26px;">
