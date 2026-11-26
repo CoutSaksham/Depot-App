@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   include CurrentCart
   include CurrentUser
 
+  ORDERS_PER_PAGE = 5
+  LINE_ITEMS_PER_PAGE = 5
+
   before_action :load_user, only: %i[ show edit update destroy ]
   before_action :set_current_user, only: %i[ orders line_items ]
   before_action :set_cart, only: %i[ line_items ]
