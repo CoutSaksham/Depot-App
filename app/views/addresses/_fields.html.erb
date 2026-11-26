@@ -1,0 +1,39 @@
+
+<% if address.errors.any? %>
+  <div id="error_explanation" style="margin:0 0 22px; padding:15px 18px; background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #dc2626; border-radius:8px; color:#991b1b;">
+
+    <h2 style="margin:0 0 10px; font-size:15px; font-weight:700;">
+      <%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:
+    </h2>
+
+    <ul style="margin:0; padding-left:20px; font-size:13px; line-height:1.8;">
+      <% address.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div style="margin:18px 0;">
+  <%= form.label :state, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+  <%= form.text_field :state,
+      style: "width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#1e293b; font-size:14px; outline:none;" %>
+</div>
+
+<div style="margin:18px 0;">
+  <%= form.label :city, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+  <%= form.text_field :city,
+      style: "width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#1e293b; font-size:14px; outline:none;" %>
+</div>
+
+<div style="margin:18px 0;">
+  <%= form.label :country, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+  <%= form.text_field :country,
+      style: "width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#1e293b; font-size:14px; outline:none;" %>
+</div>
+
+<div style="margin:18px 0;">
+  <%= form.label :pincode, style: "display:block; margin-bottom:7px; color:#334155; font-size:14px; font-weight:600;" %>
+  <%= form.text_field :pincode,
+      style: "width:100%; box-sizing:border-box; padding:11px 13px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#1e293b; font-size:14px; outline:none;" %>
+</div>

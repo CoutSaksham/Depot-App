@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :restrict_with_error
   has_many :line_items, through: :orders
   has_one :address, dependent: :destroy
+  accepts_nested_attributes_for :address
   has_secure_password
 
   validates :name, presence: true
