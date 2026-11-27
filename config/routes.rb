@@ -9,12 +9,12 @@ Rails.application.routes.draw do
   get "sessions/create"
   get "sessions/destroy"
 
-  resources :users, only: [] do
-    get :orders, on: :collection
-    get :line_items, on: :collection
+  resources :users do
+    collection do
+      get :orders
+      get :line_items
+    end
   end
-  resources :users
-
   resources :support_requests, only: %i[ index update ]
 
   scope "(:locale)" do
