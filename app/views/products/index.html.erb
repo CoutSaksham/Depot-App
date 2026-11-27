@@ -37,6 +37,12 @@
                   alt: product.title,
                   style: "display:block; width:100%; max-width:250px; max-height:220px; object-fit:contain;" %>
               </div>
+            <% else %> 
+              <div style="display:flex; align-items:center; justify-content:center; height:170px; margin-bottom:18px; padding:10px; box-sizing:border-box; background:#f8fafc; border-radius:9px;">
+                <%= image_tag product.image_url,
+                  alt: product.title,
+                  style: "display:block; width:100%; max-width:250px; max-height:220px; object-fit:contain;" %>
+              </div>
             <% end %>
 
             <h2 style="margin:0 0 8px; font-size:19px; font-weight:700; color:#0f172a; overflow-wrap:anywhere;">

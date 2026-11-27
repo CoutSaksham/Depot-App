@@ -15,6 +15,27 @@
     </div>
   </div>
 
+  <div class="product-slider" data-slider>
+
+    <div class="slides">
+      <% @product.images.each_with_index do |image, index| %>
+
+        <div class="slide <%= 'active' if index == 0 %>">
+          <%= image_tag image %>
+        </div>
+
+      <% end %>
+    </div>
+
+    <button type="button" data-prev>
+      Previous
+    </button>
+
+    <button type="button" data-next>
+      Next
+    </button>
+
+  </div>
 
   <% if product.image_url.present? %>
     <div style="margin-bottom:20px;">
