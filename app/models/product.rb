@@ -42,7 +42,7 @@ class Product < ApplicationRecord
                 if: :will_save_change_to_category_id?
   after_update -> { update_related_category_parent_counter(1) },
                 if: :saved_change_to_category_id?
-  
+
   scope :enabled, -> { where(enabled: true) }
   scope :associated_with_line_item, -> { joins(:line_items).distinct }
 
