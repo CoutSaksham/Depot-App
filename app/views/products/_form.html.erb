@@ -89,12 +89,24 @@
         style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:category].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
   </div>
 
-  <div>
-    <%= form.label :images, "Product Images" %>
 
-    <%= form.file_field :images,
-        multiple: true,
-        accept: "image/*" %>
+  <div style="margin:20px 0;">
+
+    <%= form.label :images, "Product Images",
+        style: "display:block; margin-bottom:9px; color:#334155; font-size:14px; font-weight:600;" %>
+
+    <div style="padding:18px; background:#f8fafc; border:2px dashed #86bfa0; border-radius:10px;">
+
+      <%= form.file_field :images,
+          multiple: true,
+          accept: "image/*",
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px; color:#334155; font-size:13px; cursor:pointer;" %>
+
+      <p style="margin:8px 0 0; color:#64748b; font-size:12px;">
+        You can select multiple product images. Supported formats: JPG, PNG, WEBP.
+      </p>
+
+    </div>
   </div>
 
     <%= form.submit(product.new_record? ? "Create Product" : "Update Product",

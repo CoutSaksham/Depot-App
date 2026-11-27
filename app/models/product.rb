@@ -49,7 +49,7 @@ class Product < ApplicationRecord
 
   private def max_three_images
     if images.attachments.size > MAXIMUM_NUMBER_OF_PHOTOS
-      errors.add[:images, "Cannot upload more than #{MAXIMUM_NUMBER_OF_PHOTOS}"]
+      errors.add(:images, "Cannot upload more than #{MAXIMUM_NUMBER_OF_PHOTOS}")
     end
   end
 
