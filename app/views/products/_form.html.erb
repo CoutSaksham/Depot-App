@@ -59,25 +59,61 @@
       <%= form.label :enabled, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
 
       <%= form.check_box :enabled,
-          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:enabled].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
     </div>
 
     <div style="margin-bottom:24px;">
       <%= form.label :discount_price, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
 
       <%= form.number_field :discount_price, step: "0.01", min: 0,
-          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:discount_price].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
     </div>
 
     <div style="margin-bottom:18px;">
       <%= form.label :permalink, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
 
       <%= form.text_field :permalink,
-          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:title].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:permalink].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
     </div>
+
+  <div style="margin-bottom:18px;">
+    <%= form.label :category_id, style: "display:block; margin-bottom:7px; font-size:13px; font-weight:600; color:#334155;" %>
+    <% categories = Category.all.inject([]) do |arr, cat| %>
+      <% arr << [cat.name, cat.id] %>
+    <% end %>
+    <%= form.select :category_id,
+        options_for_select([
+          ["Select a category", ""]
+        ] + categories, product.category),
+        {},
+        style: "display:block; width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #{product.errors[:category].any? ? '#f87171' : '#cbd5e1'}; border-radius:8px; background:#ffffff; color:#0f172a; font-size:14px; outline-color:#2563eb;" %>
+  </div>
+
+
+  <div style="margin:20px 0;">
+
+    <%= form.label :images, "Product Images",
+        style: "display:block; margin-bottom:9px; color:#334155; font-size:14px; font-weight:600;" %>
+
+    <div style="padding:18px; background:#f8fafc; border:2px dashed #86bfa0; border-radius:10px;">
+
+      <%= form.file_field :images,
+          multiple: true,
+          accept: "image/*",
+          style: "display:block; width:100%; box-sizing:border-box; padding:10px; color:#334155; font-size:13px; cursor:pointer;" %>
+
+      <p style="margin:8px 0 0; color:#64748b; font-size:12px;">
+        You can select multiple product images. Supported formats: JPG, PNG, WEBP.
+      </p>
+
+    </div>
+  </div>
 
     <%= form.submit(product.new_record? ? "Create Product" : "Update Product",
         style: "display:block; width:100%; padding:11px 16px; border:none; border-radius:8px; background:#2563eb; color:#ffffff; font-size:14px; font-weight:600; cursor:pointer;") %>
 
   </div>
 <% end %>
+
+
+

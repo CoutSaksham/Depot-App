@@ -1,0 +1,9 @@
+<%= form_with(model: address, class: "contents") do |form| %>
+  <%= render "addresses/fields",
+      form: form,
+      address: address %>
+
+  <div class="inline">
+    <%= form.submit %>
+  </div>
+<% end %>

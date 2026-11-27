@@ -86,6 +86,8 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def load_user
       @user = User.find(params.expect(:id))
+      rescue ActiveRecord::RecordNotFound
+        flash[:alert] = "User not found!"
     end
 
     # Only allow a list of trusted parameters through.

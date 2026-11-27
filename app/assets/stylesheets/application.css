@@ -24,3 +24,29 @@
   background: #fee2e2;
   color: #991b1b;
 }
+
+.product-slider {
+  position: relative;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.slide {
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  height: 350px;
+  object-fit: contain;
+}
+
+.product-slider button {
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+}

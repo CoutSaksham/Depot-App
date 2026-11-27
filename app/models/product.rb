@@ -3,10 +3,12 @@ class Product < ApplicationRecord
   MAXIMUM_DESCRIPTION_WORDS = 10
   EXACT_NUMBER_OF_PERMALINK_WORDS = 3
   DEFAULT_TITLE = "abc".freeze
+  MAXIMUM_NUMBER_OF_PHOTOS = 3
 
   has_many :line_items, dependent: :restrict_with_error
   has_many :carts, through: :line_items
   belongs_to :category, counter_cache: true
+  has_many_attached :images
 
   validates :title, :description, :image_url, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
@@ -30,6 +32,8 @@ class Product < ApplicationRecord
   validates :discount_price, less_than_price: true
   validates :discount_price, numericality: { less_than_or_equal_to: :price }
 
+  validate :max_three_images
+
   before_validation :set_default_title, unless: -> { title.present? }
   before_validation :set_default_discount_price, unless: -> { discount_price.present? }
   after_create -> { update_related_category_parent_counter(1) }
@@ -49,6 +53,12 @@ class Product < ApplicationRecord
   private def update_related_category_parent_counter(num)
     category = Category.find(category_id_in_database)
     category.update_parent_counter(num) if category.parent_category_id.present?
+  end
+
+  private def max_three_images
+    if images.attachments.size > MAXIMUM_NUMBER_OF_PHOTOS
+      errors.add(:images, "Cannot upload more than #{MAXIMUM_NUMBER_OF_PHOTOS}")
+    end
   end
 
   private def description_words
