@@ -61,22 +61,6 @@ class Product < ApplicationRecord
     end
   end
 
-  private def update_related_category_parent_counter(num)
-    category = Category.find(category_id_in_database)
-    category.update_parent_counter(num) if category.parent_category_id.present?
-  end
-
-  private def max_three_images
-    if images.attachments.size > MAXIMUM_NUMBER_OF_PHOTOS
-      errors.add(:images, "Cannot upload more than #{MAXIMUM_NUMBER_OF_PHOTOS}")
-    end
-  end
-
-  private def update_related_category_parent_counter(num)
-    category = Category.find(category_id_in_database)
-    category.update_parent_counter(num) if category.parent_category_id.present?
-  end
-
   private def description_words
     description ? description.scan(WORDS) : []
   end
