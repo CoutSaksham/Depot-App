@@ -24,7 +24,7 @@ class Category < ApplicationRecord
       end
     end
   end
-
+  
   private def is_parent_a_sub_category?
     errors.add(:parent_category, "Cannot make a subcategory the parent category") if Category.find(self.parent_category_id).parent_category_id.present?
   end

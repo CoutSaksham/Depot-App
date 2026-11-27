@@ -79,10 +79,14 @@ class UsersController < ApplicationController
 
   def line_items
 <<<<<<< HEAD
+<<<<<<< HEAD
     @pagy, @line_items = pagy(@user.line_items, limit: LINE_ITEMS_PER_PAGE)
 =======
     @pagy, @line_items = pagy(@user.line_items + @cart.line_items, limit: LINE_ITEMS_PER_PAGE)
 >>>>>>> d1761c4 (Still working)
+=======
+    @pagy, @line_items = pagy(@user.line_items + @cart.line_items, limit: LINE_ITEMS_PER_PAGE)
+>>>>>>> 55f1e8a7005fb97ca1a9d3738b08f830e62a7054
   end
 
   rescue_from "User::Error" do |exception|

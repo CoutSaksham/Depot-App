@@ -42,12 +42,23 @@ class Product < ApplicationRecord
                 if: :will_save_change_to_category_id?
   after_update -> { update_related_category_parent_counter(1) },
                 if: :saved_change_to_category_id?
-
+  
   scope :enabled, -> { where(enabled: true) }
   scope :associated_with_line_item, -> { joins(:line_items).distinct }
 
   def self.has_line_item_titles
     associated_with_line_item.pluck(:title)
+  end
+
+  private def update_related_category_parent_counter(num)
+    category = Category.find(category_id_in_database)
+    category.update_parent_counter(num) if category.parent_category_id.present?
+  end
+
+  private def max_three_images
+    if images.attachments.size > MAXIMUM_NUMBER_OF_PHOTOS
+      errors.add(:images, "Cannot upload more than #{MAXIMUM_NUMBER_OF_PHOTOS}")
+    end
   end
 
   private def update_related_category_parent_counter(num)
