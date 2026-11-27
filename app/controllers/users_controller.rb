@@ -10,8 +10,6 @@ class UsersController < ApplicationController
   before_action :set_current_user, only: %i[ orders line_items ]
   before_action :set_cart, only: %i[ line_items ]
 
-  layout "my_orders", only: %i[ orders line_items ]
-
   # GET /users or /users.json
   def index
     @users = User.order(:name)
@@ -24,7 +22,6 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @user.build_address
   end
 
   # GET /users/1/edit
@@ -78,15 +75,7 @@ class UsersController < ApplicationController
   end
 
   def line_items
-<<<<<<< HEAD
-<<<<<<< HEAD
     @pagy, @line_items = pagy(@user.line_items, limit: LINE_ITEMS_PER_PAGE)
-=======
-    @pagy, @line_items = pagy(@user.line_items + @cart.line_items, limit: LINE_ITEMS_PER_PAGE)
->>>>>>> d1761c4 (Still working)
-=======
-    @pagy, @line_items = pagy(@user.line_items + @cart.line_items, limit: LINE_ITEMS_PER_PAGE)
->>>>>>> 55f1e8a7005fb97ca1a9d3738b08f830e62a7054
   end
 
   rescue_from "User::Error" do |exception|
@@ -97,10 +86,12 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def load_user
       @user = User.find(params.expect(:id))
+      rescue ActiveRecord::RecordNotFound
+        flash[:alert] = "User not found!"
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email, :password, :password_confirmation, address_attributes: [ :street, :city, :state, :country, :pincode ]])
+      params.expect(user: [ :name, :email, :password, :password_confirmation ])
     end
 end
