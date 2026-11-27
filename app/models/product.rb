@@ -51,11 +51,6 @@ class Product < ApplicationRecord
     category.update_parent_counter(num) if category.parent_category_id.present?
   end
 
-  private def update_related_category_parent_counter(num)
-    category = Category.find(category_id_in_database)
-    category.update_parent_counter(num) if category.parent_category_id.present?
-  end
-
   private def description_words
     description ? description.scan(WORDS) : []
   end
