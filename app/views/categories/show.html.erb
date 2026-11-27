@@ -1,0 +1,35 @@
+
+<% content_for :title, "Showing category" %>
+
+<div style="width:100%; max-width:850px; box-sizing:border-box; margin:25px auto; padding:25px; background:#ffffff; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06);">
+
+  <% if notice.present? %>
+    <p id="notice" style="margin:0 0 20px; padding:11px 15px; background:#dcfce7; color:#166534; border:1px solid #bbf7d0; border-radius:8px; font-size:14px; font-weight:500;">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <h1 style="margin:0 0 22px; padding-bottom:14px; border-bottom:1px solid #e5e7eb; color:#14532d; font-size:26px; font-weight:750; letter-spacing:-0.5px;">
+    Showing Category
+  </h1>
+
+  <div style="margin-bottom:25px;">
+    <%= render @category %>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding-top:18px; border-top:1px solid #e5e7eb;">
+
+    <%= link_to "Edit Category", edit_category_path(@category),
+        style: "display:inline-block; padding:10px 17px; background:#15803d; color:#ffffff; text-decoration:none; border-radius:8px; font-size:14px; font-weight:600;" %>
+
+    <%= link_to "Back to Categories", categories_path,
+        style: "display:inline-block; padding:10px 17px; background:#f1f5f9; color:#334155; text-decoration:none; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-weight:600;" %>
+
+    <%= button_to "Delete Category", @category,
+        method: :delete,
+        form: { style: "display:inline-block; margin:0;" },
+        style: "padding:10px 17px; background:#dc2626; color:#ffffff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer;",
+        data: { turbo_confirm: "Are you sure?" } %>
+
+  </div>
+</div>
