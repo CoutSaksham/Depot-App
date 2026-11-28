@@ -22,6 +22,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <p>
+    Response time: <%= response.headers["X-Responded-In"] %>
+  </p>
+
   <body>
     
     <header style="display:flex; align-items:center; gap:20px; padding:8px 32px; background:#15803d; color:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
@@ -168,4 +172,6 @@
     </section>
 
   </body>
+  <%= "Hit Counter: #{Rails.cache.read("total_page_hits")}" %>
+  <p>Your IP address is: <%= request.remote_ip %></p>
 </html>

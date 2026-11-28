@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # get "admin" => "admin#index"
   namespace :admin do
     get "reports", to: "index"
+    get "categories", to: "categories"
   end
   controller :sessions do
     get "login" => :new

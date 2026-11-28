@@ -16,10 +16,8 @@ class AdminController < ApplicationController
   def show
   end
 
-  private def ensure_user_is_admin
-    unless User.find(session[:user_id]).role == 'admin'
-      flash[:notice] = "You don't have privilege to access this section"
-      redirect_to "/"
-    end
+  def categories
+    @categories = Category.eager_load(:sub_categories)
+    render template: "categories/index"
   end
 end

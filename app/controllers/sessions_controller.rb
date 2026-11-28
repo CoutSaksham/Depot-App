@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:name])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
+      session[:last_activity_at] = Time.current.to_f
       if user.role == "admin"
         puts "Admin identified"
         redirect_to "/admin/reports"
