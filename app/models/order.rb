@@ -14,6 +14,12 @@ class Order < ApplicationRecord
   validates :name, :address, :email, presence: true
   validates :pay_type, inclusion: pay_types.keys
 
+  scope :by_date, ->(from = Date.current.beginning_of_day, to = Date.current.end_of_day) {
+    from = Time.zone.parse(from) if from.is_a?(String)
+    to = Time.zone.parse(to) if to.is_a?(String)
+    where(created_at: from...to)
+  }
+
   def add_line_items_from_cart(cart)
     cart.line_items.each do |item|
       item.cart_id = nil
