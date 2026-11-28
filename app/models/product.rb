@@ -35,20 +35,9 @@ class Product < ApplicationRecord
   scope :enabled, -> { where(enabled: true) }
   scope :associated_with_line_item, -> { joins(:line_items).distinct }
 
-  def self.has_line_item_titles
+  def self.associated_with_line_item_titles
     associated_with_line_item.pluck(:title)
   end
-
-  scope :enabled, -> { where(enabled: true) }
-  scope :associated_with_line_item, -> { joins(:line_items).distinct }
-
-  def self.has_line_item_titles
-    associated_with_line_item.pluck(:title)
-  end
-
-  scope :enabled, -> { where(enabled: true) }
-  scope :objects_present_in_a_line_item, -> { joins(:line_items).distinct }
-  scope :titles_present_in_a_line_item, -> { objects_present_in_a_line_item.pluck(:title) }
 
   private def description_words
     description ? description.scan(WORDS) : []
