@@ -9,8 +9,12 @@ class ApplicationController < ActionController::Base
   before_action :authorize
 # ...
 protected
+  def set_current_user
+    @user = User.find(session[:user_id])
+  end
+
   def authorize
-    unless User.find_by(id: session[:user_id])
+    unless @user || User.find(session[:user_id])
       redirect_to login_url, notice: "Please log in"
     end
   end

@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   include Pagy::Method
   include CurrentCart
-  include CurrentUser
 
   ORDERS_PER_PAGE = 5
   LINE_ITEMS_PER_PAGE = 5

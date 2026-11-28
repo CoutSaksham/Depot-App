@@ -120,7 +120,7 @@ class LineItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_line_item
-      @line_item = Cart.find(session[:cart_id]).line_items.find(params.expect(:id))
+      @line_item = @cart.line_items.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
