@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   DEFAULT_TITLE = "abc".freeze
 
   has_many :line_items, dependent: :restrict_with_error
+  has_many :carts, through: :line_items
 
   validates :title, :description, :image_url, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
@@ -28,15 +29,8 @@ class Product < ApplicationRecord
   validates :discount_price, less_than_price: true
   validates :discount_price, numericality: { less_than_or_equal_to: :price }
 
-  before_validation :set_default_title, :set_default_discount_price
-  before_destroy :ensure_not_referenced_by_any_line_item
-
-  private def ensure_not_referenced_by_any_line_item
-    unless line_item.empty?
-      errors.add(:base, "Line Items present")
-      throw :abort
-    end
-  end
+  before_validation :set_default_title, unless: :title?
+  before_validation :set_default_discount_price, unless: :discount_price?
 
   private def description_words
     description ? description.scan(WORDS) : []
@@ -47,10 +41,10 @@ class Product < ApplicationRecord
   end
 
   private def set_default_title
-    self.title ||= DEFAULT_TITLE
+    self.title = DEFAULT_TITLE
   end
 
   private def set_default_discount_price
-    self.discount_price ||= self.price
+    self.discount_price = self.price
   end
 end

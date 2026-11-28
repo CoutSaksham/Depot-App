@@ -8,8 +8,13 @@ Rails.application.routes.draw do
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
-  resources :users
 
+  resources :users do
+    collection do
+      get :orders
+      get :line_items
+    end
+  end
   resources :support_requests, only: %i[ index update ]
 
   scope "(:locale)" do
@@ -26,8 +31,9 @@ Rails.application.routes.draw do
       end
     end
 
-    root "store#index", as: "store_index"
     resources :products
+
+    root "store#index", as: "store_index"
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  include Pagy::Method
+  include CurrentCart
+
+  ORDERS_PER_PAGE = 5
+  LINE_ITEMS_PER_PAGE = 5
+
+  before_action :load_user, only: %i[ show edit update destroy ]
+  before_action :set_current_user, only: %i[ orders line_items ]
+  before_action :set_cart, only: %i[ line_items ]
 
   # GET /users or /users.json
   def index
@@ -61,15 +69,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def orders
+    @pagy, @orders = pagy(@user.orders, limit: ORDERS_PER_PAGE)
+  end
+
+  def line_items
+    @pagy, @line_items = pagy(@user.line_items, limit: LINE_ITEMS_PER_PAGE)
+  end
+
   rescue_from "User::Error" do |exception|
     redirect_to users_url, notice: exception.message
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
+    def load_user
       @user = User.find(params.expect(:id))
+      rescue ActiveRecord::RecordNotFound
+        flash[:alert] = "User not found!"
     end
 
     # Only allow a list of trusted parameters through.
