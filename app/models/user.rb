@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   ADMIN_EMAIL = "admin@depot.com".freeze
+  DEFAULT_ROLE = "user".freeze
 
   has_many :orders, dependent: :restrict_with_error
   has_many :line_items, through: :orders
@@ -17,9 +18,14 @@ class User < ApplicationRecord
   before_destroy :ensure_admin_is_not_destroyed
   before_update :ensure_admin_is_not_updated
   before_destroy :ensure_an_admin_remains
+  before_validation :set_default_role
   after_create_commit :send_welcome_mail
 
   class Error < StandardError
+  end
+
+  private def set_default_role
+    self.role ||= DEFAULT_ROLE
   end
 
   private def ensure_an_admin_remains

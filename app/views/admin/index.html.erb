@@ -1,6 +1,5 @@
 
 <div style="width:100%; max-width:1000px; margin:30px auto; padding:0 12px; box-sizing:border-box;">
-
   <!-- Welcome Section -->
   <div style="padding:32px; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
 
@@ -36,6 +35,42 @@
       <p style="margin:4px 0 0; color:#166534; font-size:13px;">
         <%= pluralize(@total_orders, "order") %> received so far.
       </p>
+
+
+      <%= form_with url: admin_reports_path, method: :get do |f| %>
+
+        <div style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:18px; margin:20px 0; padding:22px; background:#ffffff; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+
+          <div style="flex:1; min-width:180px;">
+            <%= f.label :from, "From Date",
+                style: "display:block; margin-bottom:7px; color:#334155; font-size:13px; font-weight:600;" %>
+
+            <%= f.date_field :from,
+                value: params[:from].presence || Date.today - AdminController::RECENT_ORDERS_WINDOW,
+                style: "width:100%; box-sizing:border-box; padding:11px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#1e293b; font-size:14px;" %>
+          </div>
+
+          <div style="flex:1; min-width:180px;">
+            <%= f.label :to, "To Date",
+                style: "display:block; margin-bottom:7px; color:#334155; font-size:13px; font-weight:600;" %>
+
+            <%= f.date_field :to,
+                value: params[:to].presence || Date.today,
+                style: "width:100%; box-sizing:border-box; padding:11px 12px; border:1px solid #cbd5e1; border-radius:8px; background:#ffffff; color:#1e293b; font-size:14px;" %>
+          </div>
+
+          <div>
+            <%= f.submit "Filter Reports",
+                style: "padding:11px 22px; background:#15803d; color:#ffffff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.10);" %>
+          </div>
+
+        </div>
+
+      <% end %>
+
+      <% @recent_orders.each do |order| %>
+        <%= render order %>
+      <% end %>
     </div>
 
   </div>

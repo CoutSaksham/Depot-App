@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :addresses
   resources :categories
-  get "admin" => "admin#index"
+  # get "admin" => "admin#index"
+  namespace :admin do
+    get "reports", to: "index"
+  end
   controller :sessions do
     get "login" => :new
     post "login" => :create
